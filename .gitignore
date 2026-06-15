@@ -1,0 +1,12 @@
+# Claude Code skills / local tooling
+.claude/
+
+# OS / editor
+Thumbs.db
+.DS_Store
+
+# Node (in case a web stack is added later)
+node_modules/
+dist/
+.env
+.env.local
