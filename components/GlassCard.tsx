@@ -22,7 +22,7 @@ export default function GlassCard({
 
   return (
     <div
-      className={`group relative rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-0 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/[0.07] hover:backdrop-blur-md ${hover} ${className}`}
+      className={`group text-shadow-soft relative rounded-2xl border border-white/10 bg-white/[0.02] p-6 backdrop-blur-0 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:bg-white/[0.07] hover:backdrop-blur-md ${hover} ${className}`}
     >
       {children}
     </div>

@@ -16,10 +16,10 @@ export default function Education() {
                 {item.dates}
               </span>
             </div>
-            <p className="mt-1 text-sm font-normal text-haze-dim">
+            <p className="mt-1 text-sm font-normal text-haze">
               {item.degree}
             </p>
-            <p className="mt-3 text-sm font-light leading-relaxed text-haze-dim/80">
+            <p className="mt-3 text-sm font-light leading-relaxed text-haze/90 transition-colors duration-300 group-hover:text-haze">
               {item.detail}
             </p>
           </GlassCard>

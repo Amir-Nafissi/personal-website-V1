@@ -113,10 +113,6 @@ export default function ScrollVideo() {
         preload="auto"
         aria-hidden="true"
       />
-      {/* Readability scrim: subtly darken edges + a vertical gradient so text
-          keeps contrast without hiding the footage. */}
-      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-black/45 via-black/20 to-black/55" />
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_55%,rgba(0,0,0,0.5)_100%)]" />
     </div>
   );
 }

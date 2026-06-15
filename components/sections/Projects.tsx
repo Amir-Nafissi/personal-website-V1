@@ -13,7 +13,7 @@ export default function Projects() {
             <h2 className="font-display text-base font-normal text-haze sm:text-lg">
               {project.title}
             </h2>
-            <p className="mt-2 flex-1 text-sm font-light leading-relaxed text-haze-dim/80">
+            <p className="mt-2 flex-1 text-sm font-light leading-relaxed text-haze/90 transition-colors duration-300 group-hover:text-haze">
               {project.description}
             </p>
             <div className="mt-5 flex items-center gap-4">
@@ -23,7 +23,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${project.title} source code on GitHub`}
-                  className="inline-flex items-center gap-1.5 text-xs font-light text-haze-dim transition-colors duration-200 hover:text-amber"
+                  className="inline-flex items-center gap-1.5 text-xs font-light text-haze/80 transition-colors duration-200 hover:text-amber"
                 >
                   <GithubIcon className="h-4 w-4" />
                   Code
@@ -35,7 +35,7 @@ export default function Projects() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${project.title} live site`}
-                  className="inline-flex items-center gap-1.5 text-xs font-light text-haze-dim transition-colors duration-200 hover:text-amber"
+                  className="inline-flex items-center gap-1.5 text-xs font-light text-haze/80 transition-colors duration-200 hover:text-amber"
                 >
                   <ArrowUpRight className="h-4 w-4" aria-hidden="true" />
                   Live

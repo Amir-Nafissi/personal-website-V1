@@ -21,7 +21,7 @@ export default function Hero() {
         <h1 className="font-display text-3xl font-light tracking-tight text-haze sm:text-5xl text-shadow-glow">
           {profile.name}
         </h1>
-        <p className="mx-auto mt-4 max-w-md text-sm font-light text-haze-dim sm:text-base text-shadow-soft">
+        <p className="mx-auto mt-4 max-w-md text-sm font-light text-haze sm:text-base text-shadow-soft">
           {profile.title}
         </p>
       </motion.div>

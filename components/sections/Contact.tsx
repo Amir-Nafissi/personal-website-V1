@@ -68,7 +68,7 @@ export default function Contact() {
         <h2 className="font-display text-2xl font-light text-haze sm:text-3xl text-shadow-soft">
           Let&apos;s talk
         </h2>
-        <p className="mx-auto mt-3 max-w-sm text-sm font-light text-haze-dim text-shadow-soft">
+        <p className="mx-auto mt-3 max-w-sm text-sm font-light text-haze text-shadow-soft">
           Have something in mind, or just want to say hello? Send a message.
         </p>
 
