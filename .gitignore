@@ -5,8 +5,19 @@
 Thumbs.db
 .DS_Store
 
-# Node (in case a web stack is added later)
+# Node
 node_modules/
 dist/
 .env
 .env.local
+.env*.local
+
+# Next.js
+.next/
+/out/
+/build
+next-env.d.ts
+*.tsbuildinfo
+
+# Vercel
+.vercel

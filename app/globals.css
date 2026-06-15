@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@theme {
+  /* Deep space base */
+  --color-void: #000000;
+  --color-space: #050505;
+  --color-space-soft: #0b0b0d;
+
+  /* Amber / gold accent (accretion disk) */
+  --color-amber: #f5c26b;
+  --color-amber-deep: #e0a45e;
+
+  /* Serene meadow accent (rebirth) */
+  --color-mint: #a7d7c5;
+  --color-mint-deep: #7fc4ab;
+
+  /* Text */
+  --color-haze: #f4f4f5;
+  --color-haze-dim: #c8c8cc;
+
+  --font-display: var(--font-space-grotesk);
+  --font-sans: var(--font-inter);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: #000000;
+}
+
+body {
+  background: #000000;
+  color: var(--color-haze);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  font-weight: 300;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Subtle, layered text shadow so small text stays legible over the
+   shifting video without needing a heavy background plate. */
+.text-shadow-soft {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.55),
+    0 2px 12px rgba(0, 0, 0, 0.45);
+}
+
+.text-shadow-glow {
+  text-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.6),
+    0 0 22px rgba(245, 194, 107, 0.25);
+}
+
+/* Thin tracking for the futuristic label feel */
+.tracking-spaced {
+  letter-spacing: 0.32em;
+}
+
+/* Respect reduced-motion: disable smooth scroll + transitions */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Minimal custom scrollbar to match the dark aesthetic */
+::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
+}
