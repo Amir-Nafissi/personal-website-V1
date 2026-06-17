@@ -76,8 +76,8 @@ export default function DetailModal({
 
   const glow =
     accent === "amber"
-      ? "border-amber/40 shadow-[0_0_60px_-12px_rgba(245,194,107,0.45)]"
-      : "border-mint/40 shadow-[0_0_60px_-12px_rgba(167,215,197,0.45)]";
+      ? "border-amber/40 shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)]"
+      : "border-mint/40 shadow-[0_0_30px_-6px_rgba(167,215,197,0.35)]";
   const accentText = accent === "amber" ? "text-amber" : "text-mint";
   const linkHover =
     accent === "amber" ? "hover:text-amber" : "hover:text-mint";
@@ -86,7 +86,7 @@ export default function DetailModal({
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-md sm:p-6"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-transparent p-3 sm:p-6"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -97,7 +97,7 @@ export default function DetailModal({
             role="dialog"
             aria-modal="true"
             aria-label={title}
-            className={`text-shadow-soft relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-2xl border bg-white/[0.07] p-6 backdrop-blur-xl sm:p-8 ${glow}`}
+            className={`text-shadow-soft relative w-full max-w-6xl max-h-[92vh] min-h-[70vh] overflow-y-auto rounded-2xl border bg-white/[0.07] p-6 backdrop-blur-md sm:p-10 ${glow}`}
             initial={
               reduceMotion
                 ? { opacity: 0 }
