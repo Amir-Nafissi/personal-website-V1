@@ -5,6 +5,9 @@ import { Disc3 } from "lucide-react";
 
 const STORAGE_KEY = "music-volume";
 const DEFAULT_VOLUME = 0.5;
+// While an overlay is open the music ducks to this fraction of the user's volume.
+const DUCK_FACTOR = 0.06;
+const FADE_MS = 500;
 
 /**
  * Ambient background music with a record-player control (bottom-left).
@@ -13,8 +16,10 @@ const DEFAULT_VOLUME = 0.5;
  */
 export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const fadeRef = useRef<number | null>(null);
   const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(DEFAULT_VOLUME);
+  const [volume, setVolume] = useState(DEFAULT_VOLUME); // the user's chosen volume
+  const [ducked, setDucked] = useState(false); // true while an overlay is open
 
   // Restore saved volume on mount.
   useEffect(() => {
@@ -24,11 +29,55 @@ export default function MusicPlayer() {
     }
   }, []);
 
-  // Keep the audio element's volume in sync + persist.
+  // Smoothly fade the audio element to the active target volume whenever the
+  // user's volume or the ducked state changes; persist the user's choice.
   useEffect(() => {
-    if (audioRef.current) audioRef.current.volume = volume;
     localStorage.setItem(STORAGE_KEY, String(volume));
-  }, [volume]);
+
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const target = ducked ? volume * DUCK_FACTOR : volume;
+    const from = audio.volume;
+    const start = performance.now();
+
+    if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
+
+    const step = (now: number) => {
+      const t = Math.min(1, (now - start) / FADE_MS);
+      audio.volume = from + (target - from) * t;
+      if (t < 1) {
+        fadeRef.current = requestAnimationFrame(step);
+      } else {
+        fadeRef.current = null;
+      }
+    };
+    fadeRef.current = requestAnimationFrame(step);
+
+    return () => {
+      if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
+    };
+  }, [volume, ducked]);
+
+  // Duck the music while any detail overlay is open (events from DetailModal).
+  // A counter guards against overlapping open/close pairs.
+  useEffect(() => {
+    let openCount = 0;
+    const onOpen = () => {
+      openCount += 1;
+      setDucked(true);
+    };
+    const onClose = () => {
+      openCount = Math.max(0, openCount - 1);
+      if (openCount === 0) setDucked(false);
+    };
+    window.addEventListener("overlay-open", onOpen);
+    window.addEventListener("overlay-close", onClose);
+    return () => {
+      window.removeEventListener("overlay-open", onOpen);
+      window.removeEventListener("overlay-close", onClose);
+    };
+  }, []);
 
   const toggle = () => {
     const audio = audioRef.current;

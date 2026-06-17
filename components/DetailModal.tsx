@@ -66,9 +66,12 @@ export default function DetailModal({
     document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    // Tell the music player to duck while this overlay is open.
+    window.dispatchEvent(new Event("overlay-open"));
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
+      window.dispatchEvent(new Event("overlay-close"));
     };
   }, [open, onClose]);
 
