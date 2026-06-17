@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
+import FontSizeControl from "@/components/FontSizeControl";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -38,7 +39,10 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${spaceGrotesk.variable} antialiased`}
     >
-      <body className="bg-black text-haze">{children}</body>
+      <body className="bg-black text-haze">
+        {children}
+        <FontSizeControl />
+      </body>
     </html>
   );
 }
