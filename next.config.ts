@@ -7,6 +7,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.resolve(__dirname),
   },
+  // Hide the Next.js dev indicator badge (bottom-left in dev mode).
+  devIndicators: false,
 };
 
 export default nextConfig;

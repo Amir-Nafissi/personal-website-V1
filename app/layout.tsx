@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import FontSizeControl from "@/components/FontSizeControl";
+import MusicPlayer from "@/components/MusicPlayer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -41,6 +42,7 @@ export default function RootLayout({
     >
       <body className="bg-black text-haze">
         {children}
+        <MusicPlayer />
         <FontSizeControl />
       </body>
     </html>
