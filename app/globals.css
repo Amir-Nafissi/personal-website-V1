@@ -69,6 +69,29 @@ body {
   }
 }
 
+/* Volume slider thumb (the track fill is an inline amber gradient) */
+.music-volume::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: var(--color-amber);
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+.music-volume::-moz-range-thumb {
+  height: 14px;
+  width: 14px;
+  border-radius: 9999px;
+  background: var(--color-amber);
+  border: 2px solid rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+.music-volume::-moz-range-track {
+  background: transparent;
+}
+
 /* Minimal custom scrollbar to match the dark aesthetic */
 ::-webkit-scrollbar {
   width: 0px;

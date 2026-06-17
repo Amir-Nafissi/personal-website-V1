@@ -47,7 +47,7 @@ export default function MusicPlayer() {
   const percent = Math.round(volume * 100);
 
   return (
-    <div className="group fixed bottom-4 left-4 z-50 flex items-center">
+    <div className="group fixed bottom-[48px] left-[116px] z-50 flex items-center">
       <audio ref={audioRef} src="/reflections-reprise.mp3" loop preload="auto" />
 
       <button
@@ -56,10 +56,10 @@ export default function MusicPlayer() {
         aria-pressed={playing}
         aria-label={playing ? "Pause background music" : "Play background music"}
         title={playing ? "Pause music" : "Play music"}
-        className="text-shadow-soft inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-all duration-300 ease-out hover:border-amber/40 hover:bg-white/[0.12] hover:text-amber hover:shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
+        className="text-shadow-soft inline-flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-all duration-300 ease-out hover:border-amber/40 hover:bg-white/[0.12] hover:text-amber hover:shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
       >
         <Disc3
-          className={`h-5 w-5 ${playing ? "animate-[spin_4s_linear_infinite]" : ""}`}
+          className={`h-[22px] w-[22px] ${playing ? "animate-[spin_4s_linear_infinite]" : ""}`}
           aria-hidden="true"
         />
       </button>
@@ -75,7 +75,10 @@ export default function MusicPlayer() {
           onChange={(e) => setVolume(Number(e.target.value))}
           aria-label={`Music volume (${percent}%)`}
           title={`Volume: ${percent}%`}
-          className="music-volume h-1 w-32 cursor-pointer appearance-none rounded-full bg-white/20 accent-amber"
+          className="music-volume h-1.5 w-32 cursor-pointer appearance-none rounded-full"
+          style={{
+            background: `linear-gradient(to right, var(--color-amber) ${percent}%, rgba(255,255,255,0.2) ${percent}%)`,
+          }}
         />
       </div>
     </div>
