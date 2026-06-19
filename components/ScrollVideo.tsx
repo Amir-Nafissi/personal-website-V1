@@ -47,13 +47,17 @@ export default function ScrollVideo() {
       const duration = video.duration;
       if (!duration || Number.isNaN(duration)) return;
 
-      // Each full-screen section starts at an even fraction of the scroll, so
-      // snap progress to those points (5 sections -> [0, .25, .5, .75, 1]).
-      const sectionCount =
-        document.querySelectorAll("main section").length || 5;
-      const points = Array.from({ length: sectionCount }, (_, i) =>
-        sectionCount > 1 ? i / (sectionCount - 1) : 0,
+      // Snap to each section's real scroll position (sections can differ in
+      // height, so derive points from offsetTop rather than even fractions).
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const sections = Array.from(
+        document.querySelectorAll<HTMLElement>("main section"),
       );
+      const points =
+        scrollable > 0
+          ? sections.map((s) => s.offsetTop / scrollable)
+          : [0];
 
       tween = gsap.to(proxy, {
         t: duration,

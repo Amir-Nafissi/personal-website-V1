@@ -10,7 +10,12 @@ export default function Work() {
   const [selected, setSelected] = useState<WorkItem | null>(null);
 
   return (
-    <Section id="work" eyebrow="02 — Experience" accent="amber">
+    <Section
+      id="work"
+      eyebrow="02 — Experience"
+      accent="amber"
+      heightClass="min-h-[60vh]"
+    >
       <div className="relative space-y-4">
         {work.map((item) => (
           <GlassCard key={`${item.company}-${item.role}`} className="text-left">

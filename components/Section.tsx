@@ -11,6 +11,8 @@ type SectionProps = {
   accent?: "amber" | "mint";
   /** Horizontal placement of the content column. */
   align?: "center" | "left";
+  /** Min-height utility for the section (controls how much scroll it spans). */
+  heightClass?: string;
   children: ReactNode;
 };
 
@@ -29,12 +31,13 @@ export default function Section({
   eyebrow,
   accent = "amber",
   align = "center",
+  heightClass = "min-h-screen",
   children,
 }: SectionProps) {
   return (
     <section
       id={id}
-      className={`relative flex min-h-screen w-full flex-col justify-center px-6 py-24 sm:px-10 ${
+      className={`relative flex ${heightClass} w-full flex-col justify-center px-6 py-24 sm:px-10 ${
         align === "center" ? "items-center text-center" : "items-start"
       }`}
     >
