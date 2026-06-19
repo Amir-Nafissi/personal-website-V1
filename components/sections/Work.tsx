@@ -26,7 +26,7 @@ export default function Work() {
               className="block w-full cursor-pointer text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
               <div className="flex flex-col gap-1 sm:flex-row sm:items-baseline sm:justify-between">
-                <h2 className="font-display text-lg font-normal text-haze sm:text-xl">
+                <h2 className="font-display text-lg font-medium text-haze sm:text-xl">
                   {item.role}
                 </h2>
                 <span className="text-xs font-light text-amber tracking-wide">
@@ -36,7 +36,7 @@ export default function Work() {
               <p className="mt-1 text-sm font-normal text-haze">
                 {item.company}
               </p>
-              <p className="mt-3 text-sm font-light leading-relaxed text-haze/90 transition-colors duration-300 group-hover:text-haze">
+              <p className="mt-3 text-sm font-normal leading-relaxed text-haze">
                 {item.description}
               </p>
             </button>

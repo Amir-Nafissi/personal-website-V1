@@ -2,7 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
-import { Mail, Send, Loader2, Check } from "lucide-react";
+import { Mail, Send, Loader2, Check, FileText } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/BrandIcons";
 import { profile } from "@/lib/content";
 
@@ -46,7 +46,7 @@ export default function Contact() {
   }
 
   const inputClass =
-    "w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm font-light text-haze placeholder:text-haze-dim/50 outline-none transition-colors duration-200 focus:border-mint/50 focus:bg-white/[0.06]";
+    "w-full rounded-xl border border-white/15 bg-white/[0.08] px-4 py-3 text-sm font-normal text-haze placeholder:text-haze-dim/70 outline-none transition-colors duration-200 focus:border-mint/50 focus:bg-white/[0.11]";
 
   return (
     <section
@@ -60,15 +60,15 @@ export default function Contact() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md"
       >
-        <div className="mb-5 flex items-center justify-center gap-3 text-xs font-normal tracking-spaced uppercase text-mint">
+        <div className="mb-5 flex items-center justify-center gap-3 text-xs font-medium tracking-spaced uppercase text-mint">
           <span className="h-px w-8 bg-mint/60" />
           <span className="text-shadow-soft">04 — Contact</span>
         </div>
 
-        <h2 className="font-display text-2xl font-light text-haze sm:text-3xl text-shadow-soft">
+        <h2 className="font-display text-2xl font-normal text-haze sm:text-3xl text-shadow-soft">
           Let&apos;s talk
         </h2>
-        <p className="mx-auto mt-3 max-w-sm text-sm font-light text-haze text-shadow-soft">
+        <p className="mx-auto mt-3 max-w-sm text-sm font-normal text-haze text-shadow-soft">
           Have something in mind, or just want to say hello? Send a message.
         </p>
 
@@ -165,6 +165,11 @@ export default function Contact() {
             icon={<Mail className="h-5 w-5" aria-hidden="true" />}
             external={false}
           />
+          <SocialLink
+            href={profile.resume}
+            label="Open resume (PDF)"
+            icon={<FileText className="h-5 w-5" aria-hidden="true" />}
+          />
         </div>
       </motion.div>
     </section>
@@ -186,10 +191,11 @@ function SocialLink({
     <a
       href={href}
       aria-label={label}
+      title={label}
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
         : {})}
-      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/10 bg-white/[0.03] text-haze-dim transition-all duration-200 hover:border-mint/40 hover:text-mint hover:shadow-[0_0_22px_-6px_rgba(167,215,197,0.5)]"
+      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/[0.08] text-haze transition-all duration-200 [&_svg]:drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] hover:border-mint/40 hover:text-mint hover:shadow-[0_0_22px_-6px_rgba(167,215,197,0.5)]"
     >
       {icon}
     </a>

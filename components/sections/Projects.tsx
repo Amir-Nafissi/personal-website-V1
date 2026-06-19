@@ -28,13 +28,13 @@ export default function Projects() {
               aria-haspopup="dialog"
               className="flex flex-1 cursor-pointer flex-col text-left focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
             >
-              <h2 className="font-display text-base font-normal text-haze sm:text-lg">
+              <h2 className="font-display text-base font-medium text-haze sm:text-lg">
                 {project.title}
               </h2>
-              <p className="mt-2 flex-1 text-sm font-light leading-relaxed text-haze/90 transition-colors duration-300 group-hover:text-haze">
+              <p className="mt-2 flex-1 text-sm font-normal leading-relaxed text-haze">
                 {project.description}
               </p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-light text-haze/60 transition-colors duration-200 group-hover:text-amber">
+              <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-normal text-haze/75 transition-colors duration-200 group-hover:text-amber">
                 View details →
               </span>
             </button>
