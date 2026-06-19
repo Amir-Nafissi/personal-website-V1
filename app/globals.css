@@ -23,7 +23,9 @@
 }
 
 html {
-  scroll-behavior: smooth;
+  /* No CSS smooth-scroll: GSAP ScrollTrigger drives the snap tween itself, and
+     native smooth-scroll would fight it and cause jitter. */
+  scroll-behavior: auto;
   background: #000000;
 }
 

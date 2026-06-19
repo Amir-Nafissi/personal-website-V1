@@ -47,6 +47,14 @@ export default function ScrollVideo() {
       const duration = video.duration;
       if (!duration || Number.isNaN(duration)) return;
 
+      // Each full-screen section starts at an even fraction of the scroll, so
+      // snap progress to those points (5 sections -> [0, .25, .5, .75, 1]).
+      const sectionCount =
+        document.querySelectorAll("main section").length || 5;
+      const points = Array.from({ length: sectionCount }, (_, i) =>
+        sectionCount > 1 ? i / (sectionCount - 1) : 0,
+      );
+
       tween = gsap.to(proxy, {
         t: duration,
         ease: "none",
@@ -55,6 +63,22 @@ export default function ScrollVideo() {
           start: "top top",
           end: "bottom bottom",
           scrub: 1,
+          // Gentle, proximity-based snap: ease to the nearest section only when
+          // the user stops close to one; leave free scrolling untouched otherwise.
+          snap: {
+            snapTo: (value) => {
+              const nearest = points.reduce((a, b) =>
+                Math.abs(b - value) < Math.abs(a - value) ? b : a,
+              );
+              // Only snap when a section is genuinely near center. Sections are
+              // ~0.25 apart, so this ~0.06 zone leaves a wide dead band in
+              // between where resting on a mid-section video frame won't snap.
+              return Math.abs(nearest - value) < 0.06 ? nearest : value;
+            },
+            duration: { min: 0.4, max: 0.9 },
+            delay: 0.12,
+            ease: "power2.inOut",
+          },
         },
         onUpdate: () => {
           // HAVE_METADATA or better — safe to seek.
