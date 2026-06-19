@@ -59,7 +59,7 @@ export default function OnboardingHints() {
   };
 
   const pill =
-    "text-shadow-soft whitespace-nowrap text-xs font-light text-haze";
+    "text-shadow-soft whitespace-nowrap rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-1.5 text-sm font-medium text-haze backdrop-blur-md";
 
   return (
     <AnimatePresence>
@@ -68,8 +68,8 @@ export default function OnboardingHints() {
           {/* Music button hint (bottom-left, centered on the button at x=144). */}
           <motion.div
             className="pointer-events-none fixed bottom-[112px] left-[144px] z-50 flex -translate-x-1/2 flex-col items-center"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >
@@ -86,8 +86,8 @@ export default function OnboardingHints() {
           {/* Font-size button hint (bottom-right, centered on the button). */}
           <motion.div
             className="pointer-events-none fixed bottom-[112px] right-[144px] z-50 flex translate-x-1/2 flex-col items-center"
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, delay: 0.6 }}
           >

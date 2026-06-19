@@ -5,6 +5,9 @@ import { Disc3 } from "lucide-react";
 
 const STORAGE_KEY = "music-volume";
 const DEFAULT_VOLUME = 0.5;
+// Now-playing credit shown in the ticker under the button.
+const SONG = "Reflections — Toshifumi Hinata";
+const SONG_URL = "https://www.youtube.com/watch?v=v_s3h1CS-c4";
 // While an overlay is open the music ducks to this fraction of the user's volume.
 const DUCK_FACTOR = 0.06;
 const FADE_MS = 500;
@@ -132,6 +135,29 @@ export default function MusicPlayer() {
           }}
         />
       </div>
+
+      {/* Radio-style now-playing ticker under the button → links to the source. */}
+      <a
+        href={SONG_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${SONG} — listen on YouTube`}
+        title={`${SONG} — listen on YouTube`}
+        className="pointer-events-auto absolute left-[-4px] top-[60px] w-16 overflow-hidden text-[10px] uppercase tracking-[0.12em] text-haze/75 text-shadow-soft transition-colors duration-200 hover:text-amber"
+        style={{
+          maskImage:
+            "linear-gradient(to right, transparent, #000 20%, #000 80%, transparent)",
+          WebkitMaskImage:
+            "linear-gradient(to right, transparent, #000 20%, #000 80%, transparent)",
+        }}
+      >
+        <span className="marquee-track">
+          <span className="px-6">{SONG}</span>
+          <span className="px-6" aria-hidden="true">
+            {SONG}
+          </span>
+        </span>
+      </a>
     </div>
   );
 }

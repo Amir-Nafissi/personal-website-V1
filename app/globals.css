@@ -71,6 +71,23 @@ body {
   }
 }
 
+/* Radio-style now-playing ticker (text duplicated; -50% = one full loop) */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+.marquee-track {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  animation: marquee 11s linear infinite;
+  will-change: transform;
+}
+
 /* Volume slider thumb (the track fill is an inline amber gradient) */
 .music-volume::-webkit-slider-thumb {
   -webkit-appearance: none;
