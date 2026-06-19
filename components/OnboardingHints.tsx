@@ -59,7 +59,7 @@ export default function OnboardingHints() {
   };
 
   const pill =
-    "text-shadow-soft whitespace-nowrap rounded-full border border-white/10 bg-white/[0.07] px-3 py-1.5 text-xs font-light text-haze backdrop-blur-md";
+    "text-shadow-soft whitespace-nowrap text-xs font-light text-haze";
 
   return (
     <AnimatePresence>

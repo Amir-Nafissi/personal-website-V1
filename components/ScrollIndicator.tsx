@@ -1,14 +1,25 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 /** Subtle "scroll to explore" cue pinned near the bottom of the hero. */
 export default function ScrollIndicator() {
+  // Visible only at the very top — fades out on scroll, returns at the top
+  // (mirrors the onboarding hints).
+  const [atTop, setAtTop] = useState(true);
+
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY <= 4);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ delay: 1.4, duration: 1 }}
+      animate={{ opacity: atTop ? 1 : 0 }}
+      transition={{ delay: atTop ? 0.4 : 0, duration: 0.7 }}
       className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3"
     >
       <span className="text-[0.65rem] font-light tracking-spaced uppercase text-haze-dim text-shadow-soft">
