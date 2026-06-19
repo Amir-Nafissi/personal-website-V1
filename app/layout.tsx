@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import FontSizeControl from "@/components/FontSizeControl";
 import MusicPlayer from "@/components/MusicPlayer";
+import OnboardingHints from "@/components/OnboardingHints";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -44,6 +45,7 @@ export default function RootLayout({
         {children}
         <MusicPlayer />
         <FontSizeControl />
+        <OnboardingHints />
       </body>
     </html>
   );

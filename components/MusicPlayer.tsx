@@ -109,7 +109,8 @@ export default function MusicPlayer() {
         className="text-shadow-soft inline-flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-all duration-300 ease-out hover:border-amber/40 hover:bg-white/[0.12] hover:text-amber hover:shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
       >
         <Disc3
-          className={`h-[22px] w-[22px] ${playing ? "animate-[spin_4s_linear_infinite]" : ""}`}
+          className={`h-[28px] w-[28px] ${playing ? "animate-[spin_4s_linear_infinite]" : ""}`}
+          strokeWidth={1.5}
           aria-hidden="true"
         />
       </button>
