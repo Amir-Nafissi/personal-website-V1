@@ -37,15 +37,16 @@ export default function MusicPlayer() {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const target = ducked ? volume * DUCK_FACTOR : volume;
-    const from = audio.volume;
+    const clamp = (v: number) => Math.min(1, Math.max(0, v));
+    const target = clamp(ducked ? volume * DUCK_FACTOR : volume);
+    const from = clamp(audio.volume);
     const start = performance.now();
 
     if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
 
     const step = (now: number) => {
       const t = Math.min(1, (now - start) / FADE_MS);
-      audio.volume = from + (target - from) * t;
+      audio.volume = clamp(from + (target - from) * t);
       if (t < 1) {
         fadeRef.current = requestAnimationFrame(step);
       } else {
