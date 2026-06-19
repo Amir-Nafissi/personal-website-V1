@@ -47,16 +47,22 @@ export default function ScrollVideo() {
       const duration = video.duration;
       if (!duration || Number.isNaN(duration)) return;
 
-      // Snap to each section's real scroll position (sections can differ in
-      // height, so derive points from offsetTop rather than even fractions).
+      // Snap so each section is CENTERED in the viewport. Sections differ in
+      // height (e.g. the shorter Experience section), so derive each point from
+      // the scroll position that puts the section's center at the viewport
+      // center, not its top at the viewport top.
       const scrollable =
         document.documentElement.scrollHeight - window.innerHeight;
+      const vh = window.innerHeight;
       const sections = Array.from(
         document.querySelectorAll<HTMLElement>("main section"),
       );
       const points =
         scrollable > 0
-          ? sections.map((s) => s.offsetTop / scrollable)
+          ? sections.map((s) => {
+              const centerScroll = s.offsetTop + s.offsetHeight / 2 - vh / 2;
+              return Math.min(1, Math.max(0, centerScroll / scrollable));
+            })
           : [0];
 
       tween = gsap.to(proxy, {
@@ -66,7 +72,9 @@ export default function ScrollVideo() {
           trigger: document.documentElement,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1,
+          // Slightly tighter scrub so the video settles quickly after the user
+          // stops (less lingering catch-up "tail" that reads as jitter).
+          scrub: 0.6,
           // Gentle, proximity-based snap: ease to the nearest section only when
           // the user stops close to one; leave free scrolling untouched otherwise.
           snap: {
@@ -74,20 +82,24 @@ export default function ScrollVideo() {
               const nearest = points.reduce((a, b) =>
                 Math.abs(b - value) < Math.abs(a - value) ? b : a,
               );
-              // Only snap when a section is genuinely near center. Sections are
-              // ~0.25 apart, so this ~0.06 zone leaves a wide dead band in
-              // between where resting on a mid-section video frame won't snap.
+              // Only snap when a section is genuinely near center; leave a wide
+              // dead band in between where resting on a mid-section frame won't snap.
               return Math.abs(nearest - value) < 0.06 ? nearest : value;
             },
-            duration: { min: 0.4, max: 0.9 },
-            delay: 0.12,
+            duration: { min: 0.25, max: 0.6 },
+            delay: 0.1,
             ease: "power2.inOut",
+            inertia: false,
           },
         },
         onUpdate: () => {
-          // HAVE_METADATA or better — safe to seek.
+          // HAVE_METADATA or better — safe to seek. Skip redundant sub-frame
+          // seeks (they cause the decoder to thrash and visibly jitter).
           if (video.readyState >= 1) {
-            video.currentTime = Math.min(proxy.t, duration - 0.05);
+            const target = Math.min(proxy.t, duration - 0.05);
+            if (Math.abs(video.currentTime - target) > 1 / 48) {
+              video.currentTime = target;
+            }
           }
         },
       });
