@@ -128,19 +128,19 @@ export const projects: Project[] = [
     title: "Botto",
     description:
       "An autonomous quadruped robot (in the making)",
-    repo: "https://github.com/Amir-Nafissi",
-    live: "#",
+    repo: "https://github.com/Amir-Nafissi/Botto",
+    // live: "#",
     longDescription:
       "Botto is a work-in-progress project aimed at teaching me autonomous robotics. The goal is to build a fully autonomous, pet-like quadruped robot. To maximize my focus on the software and AI aspects, I am utilizing Dorian Todd's open-source mechanical design for the robot's physical body, allowing me to concentrate on developing its autonomous behaviors and control systems.",
     images: [{src: "/gallery/projects/Botty/screenshot.png", caption: "A screenshot from Dorian Todd's video showing his open-source robot. Youtube link: https://youtu.be/1UDsWkcQZhc?si=YT1TDwSpA3XguifE"}],
-    links: [{ label: "Repository", url: "#" }],
+    // links: [{ label: "Repository", url: "" }],
   },
   {
     title: "CueMate",
     description:
       "An Android app that voices facial expressions and gestures for blind users",
     repo: "https://github.com/Amir-Nafissi/CueMate",
-    live: "#",
+    // live: "#",
     longDescription:
       "CueMate is an Android assistive app that helps blind and visually impaired users read the non-verbal cues happening around them. Using the phone's camera, it detects facial expressions and hand gestures in real time with Google's MediaPipe, then relays them through spoken announcements and distinct vibration patterns. Everything runs fully on-device with zero cloud dependency, and the Jetpack Compose interface is TalkBack-compliant. I built it in Kotlin to turn invisible social cues into confident, independent interactions.",
     images: [
@@ -148,14 +148,14 @@ export const projects: Project[] = [
       {src: "/gallery/projects/CueMate/cuemate_screenshot.jpg", caption: "A screenshot of the Android application running."},
       {src: "/gallery/projects/CueMate/echosense_screenshot.jpg", caption: "A picture of CueMate's ancestor, EvoSense, showing the underlying MediaPipe model."}
     ],
-    links: [{ label: "Repository", url: "#" }],
+    links: [{ label: "Devpost", url: "https://devpost.com/software/cuemate" }],
   },
   {
     title: "EchoSense",
     description:
       "A smart cane that warns blind users of head- and foot-level obstacles",
     repo: "https://github.com/Amir-Nafissi/EchoSense-Pi",
-    live: "#",
+    //live: "#",
     longDescription:
       "EchoSense is a smart cane built to cover the blind spots of a traditional white cane, which often misses obstacles above knee level and leaves users exposed to head and upper-body collisions. Running on a Raspberry Pi 4 with dual ultrasonic sensors, it detects obstacles at both head and foot level in real time and gives audio alerts as they approach. This was a hands-on lesson in hardware integration and building accessibility tech with real social impact.",
     images: [
@@ -163,30 +163,30 @@ export const projects: Project[] = [
       {src: "/gallery/projects/EchoSense/echosense_full.jpg", caption: "The full white cane from above (keep in mind this was built during a hackathon, hence why it's a rough prototype)"},
       {src: "/gallery/projects/EchoSense/echosense_inside.jpg", caption: "A picture showing the internal wiring of EchoSense"}
     ],
-    links: [{ label: "Repository", url: "#" }],
+    links: [{ label: "Devpost", url: "https://devpost.com/software/echosense-elti96" }],
   },
   {
     title: "Multiplayer Checkers",
     description:
       "A real-time, server-authoritative multiplayer checkers desktop app",
     repo: "https://github.com/Amir-Nafissi/multiplayer-checkers",
-    live: "#",
+    // live: "#",
     longDescription:
       "Multiplayer Checkers is a real-time, cross-platform checkers game for Windows and Linux. The desktop client is built with Flutter, and a FastAPI (Python) backend serves matches over WebSockets. The server is authoritative — it validates every move and strictly enforces standard 8x8 checkers rules — and a FIFO auto-pairing queue matches players instantly with no lobby. I focused on correctness, clarity, and cross-platform reliability, shipping native Windows executables and a Linux Flatpak.",
     images: [
       {src: "/gallery/projects/multiplayer_checkers/multiplayer_checkers_screenshot.png", caption: "A screenshot of the game running and the underlying user interface"}
     ],
-    links: [{ label: "Repository", url: "#" }],
+    // links: [{ label: "Repository", url: "#" }],
   },
   {
     title: "ScholarCompare",
     description:
       "An AI grading tool that semantically compares student answers to a model answer",
     repo: "https://github.com/Amir-Nafissi/Scholarly-Compare",
-    live: "#",
+    // live: "#",
     longDescription:
       "Scholarly-Compare is an AI-powered grading platform that helps educators evaluate student answers in seconds. Instead of keyword matching, it uses Google's Gemini API to semantically compare each response against a model answer, surfacing conceptual gaps and knowledge strengths with personalized feedback. Educators can batch-process a whole class via CSV upload and revisit or export past evaluations to track progress. I built the front end with React, TypeScript, and Tailwind CSS, backed by a Python/Flask REST API and MongoDB.",
     images: [{src: "/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg", caption: "A screenshot of the webapp running and the underlying user interface"}],
-    links: [{ label: "Repository", url: "#" }],
+    links: [{ label: "Repository", url: "https://devpost.com/software/scholar-compare" }],
   },
 ];
