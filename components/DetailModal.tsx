@@ -282,7 +282,7 @@ export default function DetailModal({
               </h2>
               {meta && (
                 <p
-                  className={`mt-1 text-xs font-light tracking-wide ${accentText}`}
+                  className={`mt-1 text-xs font-normal tracking-wide ${accentText}`}
                 >
                   {meta}
                 </p>
@@ -304,7 +304,7 @@ export default function DetailModal({
             )}
 
             {description && (
-              <p className="mt-6 text-sm font-light leading-relaxed text-haze/90">
+              <p className="mt-6 text-[0.95rem] font-normal leading-relaxed text-haze">
                 {description}
               </p>
             )}
@@ -319,7 +319,7 @@ export default function DetailModal({
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className={`inline-flex items-center gap-1.5 text-xs font-light text-haze/80 transition-colors duration-200 ${linkHover}`}
+                      className={`inline-flex items-center gap-1.5 text-sm font-medium text-haze transition-colors duration-200 ${linkHover}`}
                     >
                       {isGithub ? (
                         <GithubIcon className="h-4 w-4" />
