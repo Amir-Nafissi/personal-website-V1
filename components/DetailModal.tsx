@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ImageIcon, X } from "lucide-react";
-import type { DetailLink } from "@/lib/content";
+import { ArrowUpRight, ChevronLeft, ChevronRight, ImageIcon, X } from "lucide-react";
+import type { DetailLink, GalleryImage } from "@/lib/content";
 import { GithubIcon } from "@/components/BrandIcons";
 
 type DetailModalProps = {
@@ -14,34 +14,57 @@ type DetailModalProps = {
   title: string;
   meta?: string;
   description: string;
-  images?: string[];
+  images?: GalleryImage[];
   links?: DetailLink[];
 };
 
+/** A gallery image after normalizing the `string | { src, caption }` union. */
+type NormalImage = { src: string; caption?: string };
+
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+/** Normalize the `string | { src, caption }` union into a uniform shape. */
+function normalizeImages(images: GalleryImage[]): NormalImage[] {
+  return images.map((img) => (typeof img === "string" ? { src: img } : img));
+}
 
 /**
  * Reorder a gallery so a logo (filename contains "logo") sits in the middle,
  * with the remaining photos split evenly to its left and right.
  */
-function centerLogo(images: string[]): string[] {
-  const logoIndex = images.findIndex((src) => /logo/i.test(src));
+function centerLogo(images: NormalImage[]): NormalImage[] {
+  const logoIndex = images.findIndex((img) => /logo/i.test(img.src));
   if (logoIndex < 0 || images.length < 2) return images;
   const others = images.filter((_, i) => i !== logoIndex);
   const mid = Math.ceil(others.length / 2);
   return [...others.slice(0, mid), images[logoIndex], ...others.slice(mid)];
 }
 
-/** One gallery cell: real image when `src` is set, otherwise an on-theme tile. */
-function ImageTile({ src, alt }: { src: string; alt: string }) {
+/** One gallery cell: a clickable image when `src` is set, otherwise an on-theme tile. */
+function ImageTile({
+  src,
+  alt,
+  onOpen,
+}: {
+  src: string;
+  alt: string;
+  onOpen?: () => void;
+}) {
   if (src) {
-    // eslint-disable-next-line @next/next/no-img-element
     return (
-      <img
-        src={src}
-        alt={alt}
-        className="h-auto w-full self-start rounded-xl border border-white/10"
-      />
+      <button
+        type="button"
+        onClick={onOpen}
+        aria-label={`Open ${alt} fullscreen`}
+        className="block w-full cursor-zoom-in rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-white/40"
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={src}
+          alt={alt}
+          className="h-auto w-full rounded-xl border border-white/10 transition-opacity duration-200 hover:opacity-90"
+        />
+      </button>
     );
   }
   return (
@@ -51,6 +74,95 @@ function ImageTile({ src, alt }: { src: string; alt: string }) {
         Image
       </span>
     </div>
+  );
+}
+
+/** Fullscreen lightbox with a reserved caption area below the photo. */
+function Lightbox({
+  images,
+  index,
+  onClose,
+  onNavigate,
+}: {
+  images: NormalImage[];
+  index: number;
+  onClose: () => void;
+  onNavigate: (next: number) => void;
+}) {
+  const current = images[index];
+  const many = images.length > 1;
+  const go = (delta: number) =>
+    onNavigate((index + delta + images.length) % images.length);
+
+  return (
+    <motion.div
+      className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-void/90 p-4 backdrop-blur-sm sm:p-8"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.2, ease: EASE }}
+      onClick={onClose}
+    >
+      <button
+        type="button"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze"
+      >
+        <X className="h-5 w-5" aria-hidden="true" />
+      </button>
+
+      {many && (
+        <>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              go(-1);
+            }}
+            aria-label="Previous photo"
+            className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze sm:left-6"
+          >
+            <ChevronLeft className="h-6 w-6" aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={(e) => {
+              e.stopPropagation();
+              go(1);
+            }}
+            aria-label="Next photo"
+            className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze sm:right-6"
+          >
+            <ChevronRight className="h-6 w-6" aria-hidden="true" />
+          </button>
+        </>
+      )}
+
+      <div
+        className="flex max-h-full w-full max-w-5xl flex-col items-center gap-4"
+        onClick={(e) => e.stopPropagation()}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={current.src}
+          alt=""
+          className="max-h-[72vh] max-w-full rounded-xl object-contain"
+        />
+        {/* Reserved space for a short caption — filled in when provided. */}
+        <div className="flex min-h-[3rem] max-w-2xl items-center justify-center px-2 text-center">
+          {current.caption ? (
+            <p className="text-sm font-light leading-relaxed text-haze/90">
+              {current.caption}
+            </p>
+          ) : (
+            <p className="text-xs font-light italic text-haze/40">
+              Add a short description for this photo.
+            </p>
+          )}
+        </div>
+      </div>
+    </motion.div>
   );
 }
 
@@ -65,27 +177,53 @@ export default function DetailModal({
   links,
 }: DetailModalProps) {
   const [mounted, setMounted] = useState(false);
+  // Index of the photo shown fullscreen in the lightbox, or null when closed.
+  const [lightbox, setLightbox] = useState<number | null>(null);
   const reduceMotion = useReducedMotion();
+
+  const gallery = centerLogo(normalizeImages(images ?? []));
 
   useEffect(() => setMounted(true), []);
 
-  // Close on Escape and lock background scroll while open.
+  // Close the modal, making sure any open lightbox is cleared too so it does
+  // not reappear the next time the modal opens.
+  const close = () => {
+    setLightbox(null);
+    onClose();
+  };
+
+  // Lock background scroll while open and tell the music player to duck.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
-    // Tell the music player to duck while this overlay is open.
     window.dispatchEvent(new Event("overlay-open"));
     return () => {
-      document.removeEventListener("keydown", onKey);
       document.body.style.overflow = prevOverflow;
       window.dispatchEvent(new Event("overlay-close"));
     };
-  }, [open, onClose]);
+  }, [open]);
+
+  // Keyboard: Escape closes the lightbox first (else the modal); arrows page
+  // through photos while the lightbox is open.
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (lightbox !== null) setLightbox(null);
+        else onClose();
+      } else if (lightbox !== null && gallery.length > 1) {
+        if (e.key === "ArrowRight")
+          setLightbox((i) => (i === null ? i : (i + 1) % gallery.length));
+        else if (e.key === "ArrowLeft")
+          setLightbox((i) =>
+            i === null ? i : (i - 1 + gallery.length) % gallery.length,
+          );
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [open, onClose, lightbox, gallery.length]);
 
   if (!mounted) return null;
 
@@ -98,6 +236,7 @@ export default function DetailModal({
     accent === "amber" ? "hover:text-amber" : "hover:text-mint";
 
   return createPortal(
+    <>
     <AnimatePresence>
       {open && (
         <motion.div
@@ -106,7 +245,7 @@ export default function DetailModal({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.25, ease: EASE }}
-          onClick={onClose}
+          onClick={close}
         >
           <motion.div
             role="dialog"
@@ -129,7 +268,7 @@ export default function DetailModal({
           >
             <button
               type="button"
-              onClick={onClose}
+              onClick={close}
               aria-label="Close"
               autoFocus
               className="absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze"
@@ -150,11 +289,15 @@ export default function DetailModal({
               )}
             </header>
 
-            {images && images.length > 0 && (
+            {gallery.length > 0 && (
               <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                {centerLogo(images).map((src, i) => (
+                {gallery.map((img, i) => (
                   <div key={i} className="w-full sm:w-[calc(33.333%-0.5rem)]">
-                    <ImageTile src={src} alt={`${title} image ${i + 1}`} />
+                    <ImageTile
+                      src={img.src}
+                      alt={`${title} image ${i + 1}`}
+                      onOpen={() => setLightbox(i)}
+                    />
                   </div>
                 ))}
               </div>
@@ -192,7 +335,19 @@ export default function DetailModal({
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>,
+    </AnimatePresence>
+
+    <AnimatePresence>
+      {open && lightbox !== null && gallery[lightbox] && (
+        <Lightbox
+          images={gallery}
+          index={lightbox}
+          onClose={() => setLightbox(null)}
+          onNavigate={setLightbox}
+        />
+      )}
+    </AnimatePresence>
+    </>,
     document.body,
   );
 }

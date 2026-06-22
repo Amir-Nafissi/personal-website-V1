@@ -8,6 +8,12 @@
  */
 export type DetailLink = { label: string; url: string };
 
+/**
+ * A gallery image. Either a bare path string, or an object that also carries a
+ * short caption shown in the fullscreen lightbox. `""` renders an empty tile.
+ */
+export type GalleryImage = string | { src: string; caption?: string };
+
 export const profile = {
   name: "Amirhossein Nafissi",
   title: "Software Engineering Student at UWaterloo",
@@ -26,7 +32,7 @@ export type Education = {
   dates: string;
   // Optional rich detail shown in the click-to-open overlay.
   longDescription?: string;
-  images?: string[]; // array length = number of placeholder tiles; "" = empty tile
+  images?: GalleryImage[]; // array length = number of placeholder tiles; "" = empty tile
   links?: DetailLink[];
 };
 
@@ -59,7 +65,7 @@ export type Work = {
   description: string;
   // Optional rich detail shown in the click-to-open overlay.
   longDescription?: string;
-  images?: string[];
+  images?: GalleryImage[];
   links?: DetailLink[];
 };
 
@@ -105,7 +111,7 @@ export type Project = {
   live?: string;
   // Optional rich detail shown in the click-to-open overlay.
   longDescription?: string;
-  images?: string[];
+  images?: GalleryImage[];
   links?: DetailLink[];
 };
 
