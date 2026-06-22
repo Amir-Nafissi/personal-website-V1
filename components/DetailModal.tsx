@@ -20,6 +20,18 @@ type DetailModalProps = {
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
+/**
+ * Reorder a gallery so a logo (filename contains "logo") sits in the middle,
+ * with the remaining photos split evenly to its left and right.
+ */
+function centerLogo(images: string[]): string[] {
+  const logoIndex = images.findIndex((src) => /logo/i.test(src));
+  if (logoIndex < 0 || images.length < 2) return images;
+  const others = images.filter((_, i) => i !== logoIndex);
+  const mid = Math.ceil(others.length / 2);
+  return [...others.slice(0, mid), images[logoIndex], ...others.slice(mid)];
+}
+
 /** One gallery cell: real image when `src` is set, otherwise an on-theme tile. */
 function ImageTile({ src, alt }: { src: string; alt: string }) {
   if (src) {
@@ -139,9 +151,11 @@ export default function DetailModal({
             </header>
 
             {images && images.length > 0 && (
-              <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                {images.map((src, i) => (
-                  <ImageTile key={i} src={src} alt={`${title} image ${i + 1}`} />
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                {centerLogo(images).map((src, i) => (
+                  <div key={i} className="w-full sm:w-[calc(33.333%-0.5rem)]">
+                    <ImageTile src={src} alt={`${title} image ${i + 1}`} />
+                  </div>
                 ))}
               </div>
             )}
