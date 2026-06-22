@@ -100,7 +100,7 @@ export default function MusicPlayer() {
   const percent = Math.round(volume * 100);
 
   return (
-    <div className="group fixed bottom-[48px] left-[116px] z-50 flex items-center">
+    <div className="group fixed bottom-[48px] left-4 z-50 flex items-center sm:left-[116px]">
       <audio ref={audioRef} src="/reflections-reprise.mp3" loop preload="auto" />
 
       <button

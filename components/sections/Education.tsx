@@ -24,7 +24,7 @@ export default function Education() {
                 <h2 className="font-display text-lg font-medium text-haze sm:text-xl">
                   {item.institution}
                 </h2>
-                <span className="text-xs font-light text-amber tracking-wide">
+                <span className="text-xs font-semibold text-amber tracking-wide [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
                   {item.dates}
                 </span>
               </div>
@@ -34,6 +34,9 @@ export default function Education() {
               <p className="mt-3 text-sm font-normal leading-relaxed text-haze">
                 {item.detail}
               </p>
+              <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-normal text-haze/75 transition-colors duration-200 group-hover:text-amber">
+                View details →
+              </span>
             </button>
           </GlassCard>
         ))}
