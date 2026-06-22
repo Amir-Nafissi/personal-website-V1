@@ -53,7 +53,6 @@ export const education: Education[] = [
   ],
     links: [
       { label: "Program page", url: "https://uwaterloo.ca/future-students/programs/software-engineering" },
-      { label: "Transcript", url: "#" },
     ],
   },
 ];
