@@ -52,20 +52,25 @@ export default function ScrollVideo() {
       // the scroll position that puts the section's center at the viewport
       // center, not its top at the viewport top.
       //
-      // Measure LIVE on every snap rather than caching once at build time:
-      // section heights aren't final until fonts/images settle and the loading
-      // gate releases scroll, and stale measurements snap sections off-center
-      // (typically too low). Recomputing is cheap and always correct.
+      // Measure LIVE on every snap (section heights aren't final until fonts/
+      // images settle and the loading gate releases scroll). Critically, the
+      // snap progress must be normalized by ScrollTrigger's OWN scroll range
+      // (`end - start`), not a separately-measured scrollHeight: the `value`
+      // passed to snapTo is ScrollTrigger's progress in that range, so using a
+      // different range here would put the target in a different scale and snap
+      // sections off-center. Normalizing by the same range makes the round-trip
+      // land exactly on each section's live center.
       const sectionCenters = () => {
-        const scrollable =
-          document.documentElement.scrollHeight - window.innerHeight;
-        if (scrollable <= 0) return [0];
+        const st = tween?.scrollTrigger;
+        const range = st ? st.end - st.start : 0;
+        if (range <= 0) return [0];
         const vh = window.innerHeight;
         return Array.from(
           document.querySelectorAll<HTMLElement>("main section"),
         ).map((s) => {
-          const centerScroll = s.offsetTop + s.offsetHeight / 2 - vh / 2;
-          return Math.min(1, Math.max(0, centerScroll / scrollable));
+          const centerScroll =
+            s.offsetTop + s.offsetHeight / 2 - vh / 2 - st!.start;
+          return Math.min(1, Math.max(0, centerScroll / range));
         });
       };
 
@@ -146,9 +151,16 @@ export default function ScrollVideo() {
     window.addEventListener("load", refresh);
     if ("fonts" in document) document.fonts.ready.then(refresh);
 
+    // Re-measure when the user changes the root font size: every section reflows
+    // to a new height, so the scrub range and snap centers must be recomputed.
+    // Defer to the next frame so the new layout has been applied first.
+    const onFontScale = () => requestAnimationFrame(refresh);
+    window.addEventListener("font-scale-change", onFontScale);
+
     return () => {
       video.removeEventListener("loadedmetadata", onReady);
       window.removeEventListener("load", refresh);
+      window.removeEventListener("font-scale-change", onFontScale);
       tween?.scrollTrigger?.kill();
       tween?.kill();
     };

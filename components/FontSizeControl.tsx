@@ -19,9 +19,12 @@ export default function FontSizeControl() {
   }, []);
 
   // Apply the scale to the document root (Tailwind sizes are rem-based) + persist.
+  // Changing the root font size reflows every section, so notify the scroll
+  // scrubber to re-measure its snap centers (otherwise sections snap off-center).
   useEffect(() => {
     document.documentElement.style.fontSize = `${SCALES[level] * 100}%`;
     localStorage.setItem(STORAGE_KEY, String(level));
+    window.dispatchEvent(new Event("font-scale-change"));
   }, [level]);
 
   const percent = Math.round(SCALES[level] * 100);
