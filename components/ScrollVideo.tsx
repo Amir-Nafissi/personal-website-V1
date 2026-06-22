@@ -51,19 +51,23 @@ export default function ScrollVideo() {
       // height (e.g. the shorter Experience section), so derive each point from
       // the scroll position that puts the section's center at the viewport
       // center, not its top at the viewport top.
-      const scrollable =
-        document.documentElement.scrollHeight - window.innerHeight;
-      const vh = window.innerHeight;
-      const sections = Array.from(
-        document.querySelectorAll<HTMLElement>("main section"),
-      );
-      const points =
-        scrollable > 0
-          ? sections.map((s) => {
-              const centerScroll = s.offsetTop + s.offsetHeight / 2 - vh / 2;
-              return Math.min(1, Math.max(0, centerScroll / scrollable));
-            })
-          : [0];
+      //
+      // Measure LIVE on every snap rather than caching once at build time:
+      // section heights aren't final until fonts/images settle and the loading
+      // gate releases scroll, and stale measurements snap sections off-center
+      // (typically too low). Recomputing is cheap and always correct.
+      const sectionCenters = () => {
+        const scrollable =
+          document.documentElement.scrollHeight - window.innerHeight;
+        if (scrollable <= 0) return [0];
+        const vh = window.innerHeight;
+        return Array.from(
+          document.querySelectorAll<HTMLElement>("main section"),
+        ).map((s) => {
+          const centerScroll = s.offsetTop + s.offsetHeight / 2 - vh / 2;
+          return Math.min(1, Math.max(0, centerScroll / scrollable));
+        });
+      };
 
       tween = gsap.to(proxy, {
         t: duration,
@@ -79,6 +83,7 @@ export default function ScrollVideo() {
           // the user stops close to one; leave free scrolling untouched otherwise.
           snap: {
             snapTo: (value) => {
+              const points = sectionCenters();
               const nearest = points.reduce((a, b) =>
                 Math.abs(b - value) < Math.abs(a - value) ? b : a,
               );
@@ -134,8 +139,16 @@ export default function ScrollVideo() {
       video.addEventListener("loadedmetadata", onReady, { once: true });
     }
 
+    // The scrubber can be built before the page's layout is final (fonts/images
+    // still settling, the loading gate still holding scroll). Re-measure once
+    // everything has loaded so the scrub range and snap centers stay accurate.
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("load", refresh);
+    if ("fonts" in document) document.fonts.ready.then(refresh);
+
     return () => {
       video.removeEventListener("loadedmetadata", onReady);
+      window.removeEventListener("load", refresh);
       tween?.scrollTrigger?.kill();
       tween?.kill();
     };
