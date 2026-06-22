@@ -9,14 +9,23 @@ import { profile } from "@/lib/content";
 /**
  * Contact form wired for Formspree.
  *
- * SETUP:
- * 1. Create a free form at https://formspree.io and copy its endpoint
- *    (looks like https://formspree.io/f/abcdwxyz).
- * 2. Replace FORM_ENDPOINT below with that URL.
- * 3. Submit the form once and confirm the verification email from Formspree.
- * No backend or API key is required — Formspree handles delivery.
+ * SETUP (one-time, ~2 min — needs access to the inbox, so only you can do it):
+ * 1. Sign up at https://formspree.io using nafissi.amir@gmail.com (this is the
+ *    address submissions get delivered to).
+ * 2. Create a new form, then copy its endpoint (looks like
+ *    https://formspree.io/f/abcdwxyz).
+ * 3. Paste that endpoint into FORM_ENDPOINT below (or set the Vercel env var
+ *    NEXT_PUBLIC_FORMSPREE_ENDPOINT to it) and redeploy.
+ * No backend or API key is required — Formspree handles delivery, sets the
+ * subject from the hidden `_subject` field, and replies go to the sender's
+ * email (the `email` field).
  */
-const FORM_ENDPOINT = "https://formspree.io/f/your_form_id"; // TODO: replace with your Formspree endpoint
+const FORM_ENDPOINT =
+  process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ??
+  "https://formspree.io/f/meebqwnw";
+
+// Subject line on the delivered email, so it's clearly from the site.
+const FORM_SUBJECT = "New message from your portfolio (nafissi.vercel.app)";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
@@ -73,6 +82,17 @@ export default function Contact() {
         </p>
 
         <form onSubmit={handleSubmit} className="mt-8 space-y-3 text-left">
+          {/* Sets the delivered email's subject so it's identifiable. */}
+          <input type="hidden" name="_subject" value={FORM_SUBJECT} />
+          {/* Honeypot: bots fill this hidden field; Formspree drops those. */}
+          <input
+            type="text"
+            name="_gotcha"
+            tabIndex={-1}
+            autoComplete="off"
+            aria-hidden="true"
+            className="hidden"
+          />
           <div>
             <label htmlFor="name" className="sr-only">
               Name
