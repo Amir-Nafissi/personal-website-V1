@@ -120,6 +120,17 @@ export default function MusicPlayer() {
   return (
     <div
       ref={rootRef}
+      onMouseLeave={() => {
+        // On hover-capable (desktop) devices, close once the cursor leaves the
+        // controls. Guarded so touch's emulated mouse events don't auto-close.
+        if (!window.matchMedia("(hover: hover)").matches) return;
+        setExpanded(false);
+        // Blur any focused control inside the player; otherwise a button that
+        // kept focus after a click (e.g. Play) keeps the panel open via
+        // :focus-within even after the cursor has left.
+        const active = document.activeElement as HTMLElement | null;
+        if (active && rootRef.current?.contains(active)) active.blur();
+      }}
       className="group fixed bottom-[48px] left-4 z-50 flex items-center sm:left-[116px]"
     >
       <audio ref={audioRef} src="/reflections-reprise.mp3" loop preload="auto" />
