@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Disc3 } from "lucide-react";
+import { Disc3, Play, Pause } from "lucide-react";
 
 const STORAGE_KEY = "music-volume";
 const DEFAULT_VOLUME = 0.2;
@@ -14,15 +14,18 @@ const FADE_MS = 500;
 
 /**
  * Ambient background music with a record-player control (bottom-left).
- * Starts paused/silent (autoplay-safe). The disc spins while playing; a volume
- * slider expands on hover/focus. Volume persists; play state never auto-resumes.
+ * Starts paused/silent (autoplay-safe). The disc spins while playing and acts as
+ * a toggle that opens a control panel (play/pause + volume slider) — on desktop
+ * the panel also reveals on hover/focus. Volume persists; play never auto-resumes.
  */
 export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const fadeRef = useRef<number | null>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(DEFAULT_VOLUME); // the user's chosen volume
   const [ducked, setDucked] = useState(false); // true while an overlay is open
+  const [expanded, setExpanded] = useState(false); // control panel open (tap)
 
   // Restore saved volume on mount. Only override the default when a value was
   // actually saved — otherwise a first-time visitor (no stored key) would get
@@ -87,6 +90,17 @@ export default function MusicPlayer() {
     };
   }, []);
 
+  // While the panel is tapped open, close it when the user taps/clicks outside
+  // (the primary way to dismiss it on touch, where there's no hover).
+  useEffect(() => {
+    if (!expanded) return;
+    const onPointerDown = (e: PointerEvent) => {
+      if (!rootRef.current?.contains(e.target as Node)) setExpanded(false);
+    };
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [expanded]);
+
   const toggle = () => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -104,15 +118,19 @@ export default function MusicPlayer() {
   const percent = Math.round(volume * 100);
 
   return (
-    <div className="group fixed bottom-[48px] left-4 z-50 flex items-center sm:left-[116px]">
+    <div
+      ref={rootRef}
+      className="group fixed bottom-[48px] left-4 z-50 flex items-center sm:left-[116px]"
+    >
       <audio ref={audioRef} src="/reflections-reprise.mp3" loop preload="auto" />
 
+      {/* Disc = toggle for the control panel. Spins while playing (status). */}
       <button
         type="button"
-        onClick={toggle}
-        aria-pressed={playing}
-        aria-label={playing ? "Pause background music" : "Play background music"}
-        title={playing ? "Pause music" : "Play music"}
+        onClick={() => setExpanded((v) => !v)}
+        aria-expanded={expanded}
+        aria-label={expanded ? "Close music controls" : "Open music controls"}
+        title="Music controls"
         className="text-shadow-soft inline-flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-all duration-300 ease-out hover:border-amber/40 hover:bg-white/[0.12] hover:text-amber hover:shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
       >
         <Disc3
@@ -122,8 +140,29 @@ export default function MusicPlayer() {
         />
       </button>
 
-      {/* Volume slider — expands on hover/focus-within. */}
-      <div className="ml-0 flex w-0 items-center overflow-hidden opacity-0 transition-all duration-300 ease-out group-hover:ml-2 group-hover:w-32 group-hover:opacity-100 group-focus-within:ml-2 group-focus-within:w-32 group-focus-within:opacity-100">
+      {/* Control panel: play/pause + volume slider. Opens on tap (expanded) or,
+          on desktop, on hover/focus while collapsed. */}
+      <div
+        className={`flex items-center overflow-hidden transition-all duration-300 ease-out ${
+          expanded
+            ? "ml-2 w-44 opacity-100"
+            : "w-0 opacity-0 group-hover:ml-2 group-hover:w-44 group-hover:opacity-100 group-focus-within:ml-2 group-focus-within:w-44 group-focus-within:opacity-100"
+        }`}
+      >
+        <button
+          type="button"
+          onClick={toggle}
+          aria-pressed={playing}
+          aria-label={playing ? "Pause background music" : "Play background music"}
+          title={playing ? "Pause music" : "Play music"}
+          className="mr-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-colors duration-200 hover:border-amber/40 hover:text-amber focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
+        >
+          {playing ? (
+            <Pause className="h-4 w-4" aria-hidden="true" />
+          ) : (
+            <Play className="h-4 w-4" aria-hidden="true" />
+          )}
+        </button>
         <input
           type="range"
           min={0}
@@ -133,7 +172,7 @@ export default function MusicPlayer() {
           onChange={(e) => setVolume(Number(e.target.value))}
           aria-label={`Music volume (${percent}%)`}
           title={`Volume: ${percent}%`}
-          className="music-volume h-1.5 w-32 cursor-pointer appearance-none rounded-full"
+          className="music-volume h-1.5 w-32 shrink-0 cursor-pointer appearance-none rounded-full"
           style={{
             background: `linear-gradient(to right, var(--color-amber) ${percent}%, rgba(255,255,255,0.2) ${percent}%)`,
           }}
