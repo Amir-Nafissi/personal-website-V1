@@ -78,7 +78,7 @@ export const work: Work[] = [
       "Maintaining and shipping features across the stack",
     // TODO: replace placeholder overlay content
     longDescription:
-      "I am currently working as a Software Engineering Intern at Instant Risk Coverage (IRC) for my Spring 2026 co-op term. It has been a highly rewarding experience where I am expanding my technical skill set and contributing to impactful projects.",
+      "I am currently working as a Technology Operations Intern at Instant Risk Coverage (IRC) for my Spring 2026 co-op term. It has been a highly rewarding experience where I am expanding my technical skill set and contributing to impactful projects.",
     images: [{src: "/gallery/experience/work_1/IRC-Logo-Maple-Leaf-home-feat.png", caption: "Company Logo"}],
     links: [{ label: "Company site", url: "https://instantriskcoverage.com/" }],
   },
@@ -90,7 +90,7 @@ export const work: Work[] = [
       "A founding member of the first undergard quantum design team at UWaterloo",
     // TODO: replace placeholder overlay content
     longDescription:
-      "WatQ is a student-run Quantum Design Team at the University of Waterloo focused on bridging the gap between quantum research and practical application. As a multidisciplinary team, we design, model, and prototype quantum technology across our software and hardware subteams. As a member of the software subteam, I use IBM's Qiskit to simulate quantum phenomena and develop quantum computing algorithms.",
+      "WatQ is a student-run Quantum Design Team at the University of Waterloo focused on bridging the gap between quantum research and practical application. As a multidisciplinary team, we design, model, and prototype quantum technology across our software and hardware subteams. As a member of the software subteam, I use IBM's Qiskit to simulate quantum phenomena and quantum computing algorithms.",
     images: [
       {src: "/gallery/experience/work_2/WatQ-group-photo.webp", caption: "The WatQ team inside the Mike & Ophelia Lazaridis Quantum-Nano Centre at the University of Waterloo."},
       {src: "/gallery/experience/work_2/hawking_page_curve.png", caption: "Results from our Hawking Radiation Simulation project using Qiskit (available in our repository). This graph displays the Page Curve for a simulated 12-qubit black hole, plotting radiation entropy against the number of emitted qubits. It compares our computer simulation (blue line) to the theoretical prediction (red dashed line). Both curves peak at the \"Page time\" before decreasing, illustrating the preservation of information during black hole evaporation."},
@@ -142,7 +142,7 @@ export const projects: Project[] = [
     repo: "https://github.com/Amir-Nafissi/CueMate",
     // live: "#",
     longDescription:
-      "CueMate is an Android assistive app that helps blind and visually impaired users read the non-verbal cues happening around them. Using the phone's camera, it detects facial expressions and hand gestures in real time with Google's MediaPipe, then relays them through spoken announcements and distinct vibration patterns. Everything runs fully on-device with zero cloud dependency, and the Jetpack Compose interface is TalkBack-compliant. I built it in Kotlin to turn invisible social cues into confident, independent interactions.",
+      "CueMate is an Android assistive app that helps blind and visually impaired users read the non-verbal cues happening around them. Using the phone's camera, it detects facial expressions and hand gestures in real time with Google's MediaPipe, then relays them through spoken announcements and vibration patterns. Everything runs fully on-device with zero cloud dependency, and the Jetpack Compose interface is TalkBack-compliant. I built it in Kotlin to turn invisible social cues into confident, independent interactions.",
     images: [
       {src: "/gallery/projects/CueMate/cuemate_logo.jpg", caption: "CueMate's Logo"},
       {src: "/gallery/projects/CueMate/cuemate_screenshot.jpg", caption: "A screenshot of the Android application running."},
@@ -157,7 +157,7 @@ export const projects: Project[] = [
     repo: "https://github.com/Amir-Nafissi/EchoSense-Pi",
     //live: "#",
     longDescription:
-      "EchoSense is a smart cane built to cover the blind spots of a traditional white cane, which often misses obstacles above knee level and leaves users exposed to head and upper-body collisions. Running on a Raspberry Pi 4 with dual ultrasonic sensors, it detects obstacles at both head and foot level in real time and gives audio alerts as they approach. This was a hands-on lesson in hardware integration and building accessibility tech with real social impact.",
+      "EchoSense is a smart cane built to cover the blind spots of a traditional white cane, which often misses obstacles above knee level and leaves users exposed to head and upper-body collisions. Running on a Raspberry Pi 4 with dual ultrasonic sensors, it detects obstacles at both head and foot level in real time and gives audio alerts as they approach. This was a hands-on lesson in hardware integration and building accessibility tech with potential social impact.",
     images: [
       {src: "/gallery/projects/EchoSense/echosense_logo.png", caption: "EchoSense's Logo"},
       {src: "/gallery/projects/EchoSense/echosense_full.jpg", caption: "The full white cane from above (keep in mind this was built during a hackathon, hence why it's a rough prototype)"},
