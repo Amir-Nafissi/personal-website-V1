@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Disc3, Play, Pause } from "lucide-react";
+import { Disc3 } from "lucide-react";
 
 const STORAGE_KEY = "music-volume";
 const DEFAULT_VOLUME = 0.2;
@@ -14,9 +14,10 @@ const FADE_MS = 500;
 
 /**
  * Ambient background music with a record-player control (bottom-left).
- * Starts paused/silent (autoplay-safe). The disc spins while playing and acts as
- * a toggle that opens a control panel (play/pause + volume slider) — on desktop
- * the panel also reveals on hover/focus. Volume persists; play never auto-resumes.
+ * Starts paused/silent (autoplay-safe). The disc is the play/pause button and
+ * spins while playing. The volume slider reveals on hover/focus (desktop) or
+ * when the disc is tapped (touch), and hides again on scroll / mouse-leave.
+ * Volume persists; play never auto-resumes.
  */
 export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -90,15 +91,21 @@ export default function MusicPlayer() {
     };
   }, []);
 
-  // While the panel is tapped open, close it when the user taps/clicks outside
-  // (the primary way to dismiss it on touch, where there's no hover).
+  // Collapse the control panel and release focus (so :focus-within doesn't keep
+  // it open after the pointer/scroll leaves).
+  const collapse = () => {
+    setExpanded(false);
+    const active = document.activeElement as HTMLElement | null;
+    if (active && rootRef.current?.contains(active)) active.blur();
+  };
+
+  // On touch, the panel is opened by tapping the button; dismiss it as soon as
+  // the user starts scrolling the page.
   useEffect(() => {
     if (!expanded) return;
-    const onPointerDown = (e: PointerEvent) => {
-      if (!rootRef.current?.contains(e.target as Node)) setExpanded(false);
-    };
-    document.addEventListener("pointerdown", onPointerDown);
-    return () => document.removeEventListener("pointerdown", onPointerDown);
+    const onScroll = () => collapse();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, [expanded]);
 
   const toggle = () => {
@@ -123,25 +130,24 @@ export default function MusicPlayer() {
       onMouseLeave={() => {
         // On hover-capable (desktop) devices, close once the cursor leaves the
         // controls. Guarded so touch's emulated mouse events don't auto-close.
-        if (!window.matchMedia("(hover: hover)").matches) return;
-        setExpanded(false);
-        // Blur any focused control inside the player; otherwise a button that
-        // kept focus after a click (e.g. Play) keeps the panel open via
-        // :focus-within even after the cursor has left.
-        const active = document.activeElement as HTMLElement | null;
-        if (active && rootRef.current?.contains(active)) active.blur();
+        if (window.matchMedia("(hover: hover)").matches) collapse();
       }}
       className="group fixed bottom-[48px] left-4 z-50 flex items-center sm:left-[116px]"
     >
       <audio ref={audioRef} src="/reflections-reprise.mp3" loop preload="auto" />
 
-      {/* Disc = toggle for the control panel. Spins while playing (status). */}
+      {/* The disc is the play/pause control (spins while playing). Tapping it
+          also reveals the volume slider — handy on touch, where there's no
+          hover; the slider hides again when the user scrolls. */}
       <button
         type="button"
-        onClick={() => setExpanded((v) => !v)}
-        aria-expanded={expanded}
-        aria-label={expanded ? "Close music controls" : "Open music controls"}
-        title="Music controls"
+        onClick={() => {
+          toggle();
+          setExpanded(true);
+        }}
+        aria-pressed={playing}
+        aria-label={playing ? "Pause background music" : "Play background music"}
+        title={playing ? "Pause music" : "Play music"}
         className="text-shadow-soft inline-flex h-[56px] w-[56px] shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-all duration-300 ease-out hover:border-amber/40 hover:bg-white/[0.12] hover:text-amber hover:shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)] focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60 focus-visible:ring-offset-2 focus-visible:ring-offset-transparent"
       >
         <Disc3
@@ -151,29 +157,15 @@ export default function MusicPlayer() {
         />
       </button>
 
-      {/* Control panel: play/pause + volume slider. Opens on tap (expanded) or,
-          on desktop, on hover/focus while collapsed. */}
+      {/* Volume slider. Reveals when the disc is tapped (expanded) or, on
+          desktop, on hover/focus while collapsed. */}
       <div
         className={`flex items-center overflow-hidden transition-all duration-300 ease-out ${
           expanded
-            ? "ml-2 w-44 opacity-100"
-            : "w-0 opacity-0 group-hover:ml-2 group-hover:w-44 group-hover:opacity-100 group-focus-within:ml-2 group-focus-within:w-44 group-focus-within:opacity-100"
+            ? "ml-2 w-32 opacity-100"
+            : "w-0 opacity-0 group-hover:ml-2 group-hover:w-32 group-hover:opacity-100 group-focus-within:ml-2 group-focus-within:w-32 group-focus-within:opacity-100"
         }`}
       >
-        <button
-          type="button"
-          onClick={toggle}
-          aria-pressed={playing}
-          aria-label={playing ? "Pause background music" : "Play background music"}
-          title={playing ? "Pause music" : "Play music"}
-          className="mr-2 inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/10 bg-white/[0.07] text-haze backdrop-blur-md transition-colors duration-200 hover:border-amber/40 hover:text-amber focus:outline-none focus-visible:ring-2 focus-visible:ring-amber/60"
-        >
-          {playing ? (
-            <Pause className="h-4 w-4" aria-hidden="true" />
-          ) : (
-            <Play className="h-4 w-4" aria-hidden="true" />
-          )}
-        </button>
         <input
           type="range"
           min={0}
