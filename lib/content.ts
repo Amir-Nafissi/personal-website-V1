@@ -49,7 +49,7 @@ export const education: Education[] = [
     images: [
       {src: "/gallery/education/Dana_Porter_Library_2.jpg", caption: "The iconic Dana Porter Library at the University of Waterloo. It is my go-to study spot on campus, and I've grown to really appreciate its unique brutalist architecture. Source: https://commons.wikimedia.org/wiki/File:Dana_Porter_Library_2.jpg"},
       {src: "/gallery/education/orientation.jpg", caption: "This is a photo of me taken at the end of orientation after receiving my pink tie. Since Software Engineering at Waterloo is jointly offered by the Faculties of Engineering and Mathematics, students receive both the traditional engineering hard hat and the math faculty's pink tie."},
-      "/gallery/education/University_of_Waterloo_logo.png"
+      {src: "/gallery/education/University_of_Waterloo_logo.png", caption: "The official emblem of the University of Waterloo."}
   ],
     links: [
       { label: "Program page", url: "https://uwaterloo.ca/future-students/programs/software-engineering" },
@@ -80,7 +80,7 @@ export const work: Work[] = [
     // TODO: replace placeholder overlay content
     longDescription:
       "I am currently working as a Software Engineering Intern at Instant Risk Coverage (IRC) for my Spring 2026 co-op term. It has been a highly rewarding experience where I am expanding my technical skill set and contributing to impactful projects.",
-    images: ["/gallery/experience/work_1/IRC-Logo-Maple-Leaf-home-feat.png"],
+    images: [{src: "/gallery/experience/work_1/IRC-Logo-Maple-Leaf-home-feat.png", caption: "Company Logo"}],
     links: [{ label: "Company site", url: "https://instantriskcoverage.com/" }],
   },
   {
@@ -95,12 +95,20 @@ export const work: Work[] = [
     images: [
       {src: "/gallery/experience/work_2/WatQ-group-photo.webp", caption: "The WatQ team inside the Mike & Ophelia Lazaridis Quantum-Nano Centre at the University of Waterloo."},
       {src: "/gallery/experience/work_2/hawking_page_curve.png", caption: "Results from our Hawking Radiation Simulation project using Qiskit (available in our repository). This graph displays the Page Curve for a simulated 12-qubit black hole, plotting radiation entropy against the number of emitted qubits. It compares our computer simulation (blue line) to the theoretical prediction (red dashed line). Both curves peak at the \"Page time\" before decreasing, illustrating the preservation of information during black hole evaporation."},
-      "/gallery/experience/work_2/WATQ_logo_Q_ket_Color_pink_red.png",
+      {src: "/gallery/experience/work_2/WATQ_logo_Q_ket_Color_pink_red.png", caption: "The official WatQ design team logo."}
     ],
     links: [
       { label: "Design Team site", url: "https://watq.vercel.app/" },
       { label: "Repository", url: "https://github.com/UW-WatQ" },
     ],
+  },
+  {
+    role: "Machine Learning Internship",
+    company: "University of Waterloo",
+    dates: "Spring 2023",
+    description: "Helping with data collection for a machine learning model",
+    longDescription:
+      "During high school, I completed a data collection internship at the University of Waterloo, working with a research group to compile a sensitive security dataset used for training robust machine learning models. The most valuable takeaway was gaining hands-on experience building machine learning models using various Python libraries such as pandas, Matplotlib, and scikit-learn which laid the groundwork for my personal projects. I also learned a few useful machine learning concepts. \n Note: Due to the confidential nature of this project, no images are available.",
   },
 ];
 
@@ -125,7 +133,7 @@ export const projects: Project[] = [
     live: "#",
     longDescription:
       "Botto is a work-in-progress project aimed at teaching me autonomous robotics. The goal is to build a fully autonomous, pet-like quadruped robot. To maximize my focus on the software and AI aspects, I am utilizing Dorian Todd's open-source mechanical design for the robot's physical body, allowing me to concentrate on developing its autonomous behaviors and control systems.",
-    images: ["/gallery/projects/Botty/screenshot.png"],
+    images: [{src: "/gallery/projects/Botty/screenshot.png", caption: "A screenshot from Dorian Todd's video showing his open-source robot. Youtube link: https://youtu.be/1UDsWkcQZhc?si=YT1TDwSpA3XguifE"}],
     links: [{ label: "Repository", url: "#" }],
   },
   {
@@ -137,9 +145,9 @@ export const projects: Project[] = [
     longDescription:
       "CueMate is an Android assistive app that helps blind and visually impaired users read the non-verbal cues happening around them. Using the phone's camera, it detects facial expressions and hand gestures in real time with Google's MediaPipe, then relays them through spoken announcements and distinct vibration patterns. Everything runs fully on-device with zero cloud dependency, and the Jetpack Compose interface is TalkBack-compliant. I built it in Kotlin to turn invisible social cues into confident, independent interactions.",
     images: [
-      "/gallery/projects/CueMate/cuemate_logo.jpg",
-      "/gallery/projects/CueMate/cuemate_screenshot.jpg",
-      "/gallery/projects/CueMate/echosense_screenshot.jpg",
+      {src: "/gallery/projects/CueMate/cuemate_logo.jpg", caption: "CueMate's Logo"},
+      {src: "/gallery/projects/CueMate/cuemate_screenshot.jpg", caption: "A screenshot of the Android application running."},
+      {src: "/gallery/projects/CueMate/echosense_screenshot.jpg", caption: "A picture of CueMate's ancestor, EvoSense, showing the underlying MediaPipe model."}
     ],
     links: [{ label: "Repository", url: "#" }],
   },
@@ -150,11 +158,11 @@ export const projects: Project[] = [
     repo: "https://github.com/Amir-Nafissi/EchoSense-Pi",
     live: "#",
     longDescription:
-      "EchoSense is a smart cane built to cover the blind spots of a traditional white cane, which often misses obstacles above knee level and leaves users exposed to head and upper-body collisions. Running on a Raspberry Pi 4 with dual ultrasonic sensors, it detects obstacles at both head and foot level in real time and gives audio alerts as they approach. A companion Android app (Java) personalizes those alerts based on the user's height, while Python on the Pi drives the sensing. It was a hands-on lesson in hardware integration, networking between the app and the Pi, and building accessibility tech with real social impact.",
+      "EchoSense is a smart cane built to cover the blind spots of a traditional white cane, which often misses obstacles above knee level and leaves users exposed to head and upper-body collisions. Running on a Raspberry Pi 4 with dual ultrasonic sensors, it detects obstacles at both head and foot level in real time and gives audio alerts as they approach. This was a hands-on lesson in hardware integration and building accessibility tech with real social impact.",
     images: [
-      "/gallery/projects/EchoSense/echosense_logo.png",
-      "/gallery/projects/EchoSense/echosense_full.jpg",
-      "/gallery/projects/EchoSense/echosense_inside.jpg",
+      {src: "/gallery/projects/EchoSense/echosense_logo.png", caption: "EchoSense's Logo"},
+      {src: "/gallery/projects/EchoSense/echosense_full.jpg", caption: "The full white cane from above (keep in mind this was built during a hackathon, hence why it's a rough prototype)"},
+      {src: "/gallery/projects/EchoSense/echosense_inside.jpg", caption: "A picture showing the internal wiring of EchoSense"}
     ],
     links: [{ label: "Repository", url: "#" }],
   },
@@ -167,7 +175,7 @@ export const projects: Project[] = [
     longDescription:
       "Multiplayer Checkers is a real-time, cross-platform checkers game for Windows and Linux. The desktop client is built with Flutter, and a FastAPI (Python) backend serves matches over WebSockets. The server is authoritative — it validates every move and strictly enforces standard 8x8 checkers rules — and a FIFO auto-pairing queue matches players instantly with no lobby. I focused on correctness, clarity, and cross-platform reliability, shipping native Windows executables and a Linux Flatpak.",
     images: [
-      "/gallery/projects/multiplayer_checkers/multiplayer_checkers_screenshot.png",
+      {src: "/gallery/projects/multiplayer_checkers/multiplayer_checkers_screenshot.png", caption: "A screenshot of the game running and the underlying user interface"}
     ],
     links: [{ label: "Repository", url: "#" }],
   },
@@ -179,7 +187,7 @@ export const projects: Project[] = [
     live: "#",
     longDescription:
       "Scholarly-Compare is an AI-powered grading platform that helps educators evaluate student answers in seconds. Instead of keyword matching, it uses Google's Gemini API to semantically compare each response against a model answer, surfacing conceptual gaps and knowledge strengths with personalized feedback. Educators can batch-process a whole class via CSV upload and revisit or export past evaluations to track progress. I built the front end with React, TypeScript, and Tailwind CSS, backed by a Python/Flask REST API and MongoDB.",
-    images: ["/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg"],
+    images: [{src: "/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg", caption: "A screenshot of the webapp running and the underlying user interface"}],
     links: [{ label: "Repository", url: "#" }],
   },
 ];
