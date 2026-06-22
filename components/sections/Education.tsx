@@ -10,7 +10,12 @@ export default function Education() {
   const [selected, setSelected] = useState<EducationItem | null>(null);
 
   return (
-    <Section id="education" eyebrow="01 — Education" accent="amber">
+    <Section
+      id="education"
+      eyebrow="01 — Education"
+      accent="amber"
+      heightClass="min-h-[70vh]"
+    >
       <div className="space-y-4">
         {education.map((item) => (
           <GlassCard key={item.institution} className="text-left">

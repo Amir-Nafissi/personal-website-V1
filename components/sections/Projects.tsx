@@ -18,7 +18,12 @@ export default function Projects() {
   const [selected, setSelected] = useState<Project | null>(null);
 
   return (
-    <Section id="projects" eyebrow="03 — Projects" accent="amber">
+    <Section
+      id="projects"
+      eyebrow="03 — Projects"
+      accent="amber"
+      heightClass="min-h-[75vh]"
+    >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {projects.map((project) => (
           <GlassCard key={project.title} className="flex flex-col text-left">
