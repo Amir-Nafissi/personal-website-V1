@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from "react";
 import { Disc3 } from "lucide-react";
 
 const STORAGE_KEY = "music-volume";
-const DEFAULT_VOLUME = 0.5;
+const DEFAULT_VOLUME = 0.2;
 // Now-playing credit shown in the ticker under the button.
 const SONG = "Reflections — Toshifumi Hinata";
 const SONG_URL = "https://www.youtube.com/watch?v=v_s3h1CS-c4";
 // While an overlay is open the music ducks to this fraction of the user's volume.
-const DUCK_FACTOR = 0.06;
+const DUCK_FACTOR = 0.4;
 const FADE_MS = 500;
 
 /**
@@ -24,9 +24,13 @@ export default function MusicPlayer() {
   const [volume, setVolume] = useState(DEFAULT_VOLUME); // the user's chosen volume
   const [ducked, setDucked] = useState(false); // true while an overlay is open
 
-  // Restore saved volume on mount.
+  // Restore saved volume on mount. Only override the default when a value was
+  // actually saved — otherwise a first-time visitor (no stored key) would get
+  // Number(null) === 0 and start at silent.
   useEffect(() => {
-    const saved = Number(localStorage.getItem(STORAGE_KEY));
+    const stored = localStorage.getItem(STORAGE_KEY);
+    if (stored === null) return;
+    const saved = Number(stored);
     if (Number.isFinite(saved) && saved >= 0 && saved <= 1) {
       setVolume(saved);
     }
