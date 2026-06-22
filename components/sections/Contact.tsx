@@ -171,6 +171,11 @@ export default function Contact() {
             icon={<FileText className="h-5 w-5" aria-hidden="true" />}
           />
         </div>
+
+        {/* Copyright notice, just below the social/resume buttons. */}
+        <p className="mt-10 text-sm font-medium text-white text-shadow-soft">
+          © {new Date().getFullYear()} {profile.name}. All rights reserved.
+        </p>
       </motion.div>
     </section>
   );

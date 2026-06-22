@@ -4,6 +4,7 @@ import "./globals.css";
 import FontSizeControl from "@/components/FontSizeControl";
 import MusicPlayer from "@/components/MusicPlayer";
 import OnboardingHints from "@/components/OnboardingHints";
+import LoadingGate from "@/components/LoadingGate";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,6 +47,7 @@ export default function RootLayout({
         <MusicPlayer />
         <FontSizeControl />
         <OnboardingHints />
+        <LoadingGate />
       </body>
     </html>
   );

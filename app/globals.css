@@ -111,6 +111,21 @@ body {
   background: transparent;
 }
 
+/* Loading gate: an indeterminate amber->mint bar sweeping across the track,
+   echoing the site's black-hole-to-meadow arc. */
+@keyframes loader-sweep {
+  0% {
+    transform: translateX(-120%);
+  }
+  100% {
+    transform: translateX(420%);
+  }
+}
+.loader-sweep {
+  animation: loader-sweep 1.25s ease-in-out infinite;
+  will-change: transform;
+}
+
 /* Minimal custom scrollbar to match the dark aesthetic */
 ::-webkit-scrollbar {
   width: 0px;
