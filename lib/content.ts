@@ -40,19 +40,19 @@ export type Education = {
 export const education: Education[] = [
   {
     institution: "University of Waterloo",
-    degree: "BASc, Software Engineering",
+    degree: "Bachelor of Software Engineering (BSE)",
     detail: "Coursework in systems, algorithms, and human–computer interaction.",
-    dates: "2024 — 2029",
+    dates: "2025 — 2030",
     // TODO: replace placeholder overlay content
     longDescription:
-      "Placeholder description. Add details about your program here — relevant coursework, design teams, research, awards, or anything that tells the story behind this entry. This text appears in the overlay when the card is clicked.",
+      "I am currently pursuing a Bachelor's degree in Software Engineering at the University of Waterloo. While the program is rigorous, I am deeply engaged in my coursework and thoroughly enjoying the technical challenges it presents.",
     images: [
-      "/gallery/education/Dana_Porter_Library_2.jpg",
-      "/gallery/education/orientation.jpg",
-      "/gallery/education/University_of_Waterloo_logo.png",
-    ],
+      {src: "/gallery/education/Dana_Porter_Library_2.jpg", caption: "The iconic Dana Porter Library at the University of Waterloo. It is my go-to study spot on campus, and I've grown to really appreciate its unique brutalist architecture. Source: https://commons.wikimedia.org/wiki/File:Dana_Porter_Library_2.jpg"},
+      {src: "/gallery/education/orientation.jpg", caption: "This is a photo of me taken at the end of orientation after receiving my pink tie. Since Software Engineering at Waterloo is jointly offered by the Faculties of Engineering and Mathematics, students receive both the traditional engineering hard hat and the math faculty's pink tie."},
+      "/gallery/education/University_of_Waterloo_logo.png"
+  ],
     links: [
-      { label: "Program page", url: "#" },
+      { label: "Program page", url: "https://uwaterloo.ca/future-students/programs/software-engineering" },
       { label: "Transcript", url: "#" },
     ],
   },
@@ -72,34 +72,34 @@ export type Work = {
 // TODO: edit work experience
 export const work: Work[] = [
   {
-    role: "Software Engineering Intern",
-    company: "Company One",
-    dates: "Summer 2025",
+    role: "TechOps Developer",
+    company: "Instant Risk Coverage",
+    dates: "Spring 2026",
     description:
-      "Built and shipped features across the stack, focusing on performance and clean, maintainable interfaces.",
+      "Maintaining and shipping features across the stack",
     // TODO: replace placeholder overlay content
     longDescription:
-      "Placeholder description. Describe your impact here — what you built, the technologies you used, the scale, and the outcomes. Add screenshots or diagrams to the gallery above. This appears in the overlay when the card is clicked.",
+      "I am currently working as a Software Engineering Intern at Instant Risk Coverage (IRC) for my Spring 2026 co-op term. It has been a highly rewarding experience where I am expanding my technical skill set and contributing to impactful projects.",
     images: ["/gallery/experience/work_1/IRC-Logo-Maple-Leaf-home-feat.png"],
-    links: [{ label: "Company site", url: "#" }],
+    links: [{ label: "Company site", url: "https://instantriskcoverage.com/" }],
   },
   {
-    role: "Developer",
-    company: "Student Project / Club",
-    dates: "2024 — Present",
+    role: "Founding Member and Software Developer",
+    company: "WatQ",
+    dates: "2025 — Present",
     description:
-      "Collaborated with a small team to design and deliver tools used by fellow students.",
+      "A founding member of the first undergard quantum design team at UWaterloo",
     // TODO: replace placeholder overlay content
     longDescription:
-      "Placeholder description. Talk about the team, your role, and what you shipped. Link out to the live tool or repo below, and drop in some screenshots above.",
+      "WatQ is a student-run Quantum Design Team at the University of Waterloo focused on bridging the gap between quantum research and practical application. As a multidisciplinary team, we design, model, and prototype quantum technology across our software and hardware subteams. As a member of the software subteam, I use IBM's Qiskit to simulate quantum phenomena and develop quantum computing algorithms.",
     images: [
-      "/gallery/experience/work_2/WatQ-group-photo.webp",
-      "/gallery/experience/work_2/hawking_page_curve.png",
+      {src: "/gallery/experience/work_2/WatQ-group-photo.webp", caption: "The WatQ team inside the Mike & Ophelia Lazaridis Quantum-Nano Centre at the University of Waterloo."},
+      {src: "/gallery/experience/work_2/hawking_page_curve.png", caption: "Results from our Hawking Radiation Simulation project using Qiskit (available in our repository). This graph displays the Page Curve for a simulated 12-qubit black hole, plotting radiation entropy against the number of emitted qubits. It compares our computer simulation (blue line) to the theoretical prediction (red dashed line). Both curves peak at the \"Page time\" before decreasing, illustrating the preservation of information during black hole evaporation."},
       "/gallery/experience/work_2/WATQ_logo_Q_ket_Color_pink_red.png",
     ],
     links: [
-      { label: "Project site", url: "#" },
-      { label: "Repository", url: "#" },
+      { label: "Design Team site", url: "https://watq.vercel.app/" },
+      { label: "Repository", url: "https://github.com/UW-WatQ" },
     ],
   },
 ];
@@ -118,24 +118,24 @@ export type Project = {
 // TODO: edit project descriptions and links — titles and images are wired up.
 export const projects: Project[] = [
   {
-    title: "Botty",
+    title: "Botto",
     description:
-      "TODO: short one-line description shown on the project card.",
+      "An autonomous quadruped robot (in the making)",
     repo: "https://github.com/Amir-Nafissi",
     live: "#",
     longDescription:
-      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+      "Botto is a work-in-progress project aimed at teaching me autonomous robotics. The goal is to build a fully autonomous, pet-like quadruped robot. To maximize my focus on the software and AI aspects, I am utilizing Dorian Todd's open-source mechanical design for the robot's physical body, allowing me to concentrate on developing its autonomous behaviors and control systems.",
     images: ["/gallery/projects/Botty/screenshot.png"],
     links: [{ label: "Repository", url: "#" }],
   },
   {
     title: "CueMate",
     description:
-      "TODO: short one-line description shown on the project card.",
-    repo: "https://github.com/Amir-Nafissi",
+      "An Android app that voices facial expressions and gestures for blind users",
+    repo: "https://github.com/Amir-Nafissi/CueMate",
     live: "#",
     longDescription:
-      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+      "CueMate is an Android assistive app that helps blind and visually impaired users read the non-verbal cues happening around them. Using the phone's camera, it detects facial expressions and hand gestures in real time with Google's MediaPipe, then relays them through spoken announcements and distinct vibration patterns. Everything runs fully on-device with zero cloud dependency, and the Jetpack Compose interface is TalkBack-compliant. I built it in Kotlin to turn invisible social cues into confident, independent interactions.",
     images: [
       "/gallery/projects/CueMate/cuemate_logo.jpg",
       "/gallery/projects/CueMate/cuemate_screenshot.jpg",
@@ -146,11 +146,11 @@ export const projects: Project[] = [
   {
     title: "EchoSense",
     description:
-      "TODO: short one-line description shown on the project card.",
-    repo: "https://github.com/Amir-Nafissi",
+      "A smart cane that warns blind users of head- and foot-level obstacles",
+    repo: "https://github.com/Amir-Nafissi/EchoSense-Pi",
     live: "#",
     longDescription:
-      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+      "EchoSense is a smart cane built to cover the blind spots of a traditional white cane, which often misses obstacles above knee level and leaves users exposed to head and upper-body collisions. Running on a Raspberry Pi 4 with dual ultrasonic sensors, it detects obstacles at both head and foot level in real time and gives audio alerts as they approach. A companion Android app (Java) personalizes those alerts based on the user's height, while Python on the Pi drives the sensing. It was a hands-on lesson in hardware integration, networking between the app and the Pi, and building accessibility tech with real social impact.",
     images: [
       "/gallery/projects/EchoSense/echosense_logo.png",
       "/gallery/projects/EchoSense/echosense_full.jpg",
@@ -161,11 +161,11 @@ export const projects: Project[] = [
   {
     title: "Multiplayer Checkers",
     description:
-      "TODO: short one-line description shown on the project card.",
-    repo: "https://github.com/Amir-Nafissi",
+      "A real-time, server-authoritative multiplayer checkers desktop app",
+    repo: "https://github.com/Amir-Nafissi/multiplayer-checkers",
     live: "#",
     longDescription:
-      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+      "Multiplayer Checkers is a real-time, cross-platform checkers game for Windows and Linux. The desktop client is built with Flutter, and a FastAPI (Python) backend serves matches over WebSockets. The server is authoritative — it validates every move and strictly enforces standard 8x8 checkers rules — and a FIFO auto-pairing queue matches players instantly with no lobby. I focused on correctness, clarity, and cross-platform reliability, shipping native Windows executables and a Linux Flatpak.",
     images: [
       "/gallery/projects/multiplayer_checkers/multiplayer_checkers_screenshot.png",
     ],
@@ -174,11 +174,11 @@ export const projects: Project[] = [
   {
     title: "ScholarCompare",
     description:
-      "TODO: short one-line description shown on the project card.",
-    repo: "https://github.com/Amir-Nafissi",
+      "An AI grading tool that semantically compares student answers to a model answer",
+    repo: "https://github.com/Amir-Nafissi/Scholarly-Compare",
     live: "#",
     longDescription:
-      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+      "Scholarly-Compare is an AI-powered grading platform that helps educators evaluate student answers in seconds. Instead of keyword matching, it uses Google's Gemini API to semantically compare each response against a model answer, surfacing conceptual gaps and knowledge strengths with personalized feedback. Educators can batch-process a whole class via CSV upload and revisit or export past evaluations to track progress. I built the front end with React, TypeScript, and Tailwind CSS, backed by a Python/Flask REST API and MongoDB.",
     images: ["/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg"],
     links: [{ label: "Repository", url: "#" }],
   },
