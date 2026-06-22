@@ -65,9 +65,13 @@ export default function OnboardingHints() {
     <AnimatePresence>
       {visible && (
         <>
-          {/* Music button hint (bottom-left, centered on the button at x=144). */}
+          {/* Music button hint (bottom-left). On mobile the pill pins to the
+              left edge (so it never overflows); the arrow stays under the pill's
+              middle and tilts down-left toward the button below. At sm+ the
+              column centers on the button at x=144 and the arrow points straight
+              down. */}
           <motion.div
-            className="pointer-events-none fixed bottom-[112px] left-[144px] z-50 flex -translate-x-1/2 flex-col items-center"
+            className="pointer-events-none fixed bottom-[112px] left-4 z-50 flex flex-col items-center sm:left-[144px] sm:-translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -79,13 +83,19 @@ export default function OnboardingHints() {
               transition={bobTransition}
               className="mt-1 text-amber"
             >
-              <ArrowDown className="h-5 w-5" aria-hidden="true" />
+              <ArrowDown
+                className="h-5 w-5 origin-top rotate-[35deg] sm:rotate-0"
+                aria-hidden="true"
+              />
             </motion.span>
           </motion.div>
 
-          {/* Font-size button hint (bottom-right, centered on the button). */}
+          {/* Font-size button hint (bottom-right). Mirror of the music hint:
+              on mobile the pill pins to the right edge and the arrow tilts
+              down-right from the pill's middle toward the button; at sm+ it
+              centers on the button and points straight down. */}
           <motion.div
-            className="pointer-events-none fixed bottom-[112px] right-[144px] z-50 flex translate-x-1/2 flex-col items-center"
+            className="pointer-events-none fixed bottom-[112px] right-4 z-50 flex flex-col items-center sm:right-[144px] sm:translate-x-1/2"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -97,7 +107,10 @@ export default function OnboardingHints() {
               transition={bobTransition}
               className="mt-1 text-amber"
             >
-              <ArrowDown className="h-5 w-5" aria-hidden="true" />
+              <ArrowDown
+                className="h-5 w-5 origin-top rotate-[-40deg] sm:rotate-0"
+                aria-hidden="true"
+              />
             </motion.span>
           </motion.div>
         </>
