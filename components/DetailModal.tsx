@@ -28,7 +28,7 @@ function ImageTile({ src, alt }: { src: string; alt: string }) {
       <img
         src={src}
         alt={alt}
-        className="aspect-video w-full rounded-xl border border-white/10 object-cover"
+        className="h-auto w-full self-start rounded-xl border border-white/10"
       />
     );
   }

@@ -40,7 +40,11 @@ export const education: Education[] = [
     // TODO: replace placeholder overlay content
     longDescription:
       "Placeholder description. Add details about your program here — relevant coursework, design teams, research, awards, or anything that tells the story behind this entry. This text appears in the overlay when the card is clicked.",
-    images: ["", "", ""],
+    images: [
+      "/gallery/education/Dana_Porter_Library_2.jpg",
+      "/gallery/education/orientation.jpg",
+      "/gallery/education/University_of_Waterloo_logo.png",
+    ],
     links: [
       { label: "Program page", url: "#" },
       { label: "Transcript", url: "#" },
@@ -70,7 +74,7 @@ export const work: Work[] = [
     // TODO: replace placeholder overlay content
     longDescription:
       "Placeholder description. Describe your impact here — what you built, the technologies you used, the scale, and the outcomes. Add screenshots or diagrams to the gallery above. This appears in the overlay when the card is clicked.",
-    images: ["", "", ""],
+    images: ["/gallery/experience/work_1/IRC-Logo-Maple-Leaf-home-feat.png"],
     links: [{ label: "Company site", url: "#" }],
   },
   {
@@ -82,7 +86,11 @@ export const work: Work[] = [
     // TODO: replace placeholder overlay content
     longDescription:
       "Placeholder description. Talk about the team, your role, and what you shipped. Link out to the live tool or repo below, and drop in some screenshots above.",
-    images: ["", ""],
+    images: [
+      "/gallery/experience/work_2/WatQ-group-photo.webp",
+      "/gallery/experience/work_2/hawking_page_curve.png",
+      "/gallery/experience/work_2/WATQ_logo_Q_ket_Color_pink_red.png",
+    ],
     links: [
       { label: "Project site", url: "#" },
       { label: "Repository", url: "#" },
@@ -101,48 +109,71 @@ export type Project = {
   links?: DetailLink[];
 };
 
-// TODO: edit projects
+// TODO: edit project descriptions and links — titles and images are wired up.
 export const projects: Project[] = [
   {
-    title: "Project Nebula",
+    title: "Botty",
     description:
-      "A real-time visualization tool that turns dense datasets into something explorable and calm.",
+      "TODO: short one-line description shown on the project card.",
     repo: "https://github.com/Amir-Nafissi",
     live: "#",
     longDescription:
-      "Placeholder description. Explain what this project does, the problem it solves, the stack you used, and anything you're proud of. Add real screenshots to the gallery above and extra links below.",
-    images: ["", "", ""],
-    links: [{ label: "Documentation", url: "#" }],
+      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+    images: ["/gallery/projects/Botty/screenshot.png"],
+    links: [{ label: "Repository", url: "#" }],
   },
   {
-    title: "Wormhole CLI",
+    title: "CueMate",
     description:
-      "A small, fast command-line utility for moving files between machines with zero config.",
-    repo: "https://github.com/Amir-Nafissi",
-    longDescription:
-      "Placeholder description. Describe the design goals, the commands it exposes, and how it works under the hood. Drop in terminal recordings or screenshots above.",
-    images: ["", ""],
-    links: [{ label: "Install guide", url: "#" }],
-  },
-  {
-    title: "Meadow",
-    description:
-      "An ambient focus app that pairs generative soundscapes with a minimal, distraction-free timer.",
+      "TODO: short one-line description shown on the project card.",
     repo: "https://github.com/Amir-Nafissi",
     live: "#",
     longDescription:
-      "Placeholder description. Walk through the experience, the audio engine, and the design decisions behind the minimal UI. Showcase the interface in the gallery above.",
-    images: ["", "", ""],
-    links: [{ label: "Case study", url: "#" }],
+      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+    images: [
+      "/gallery/projects/CueMate/cuemate_logo.jpg",
+      "/gallery/projects/CueMate/cuemate_screenshot.jpg",
+      "/gallery/projects/CueMate/echosense_screenshot.jpg",
+    ],
+    links: [{ label: "Repository", url: "#" }],
   },
   {
-    title: "Event Horizon",
+    title: "EchoSense",
     description:
-      "An experiment in scroll-driven storytelling — the technique powering this very site.",
+      "TODO: short one-line description shown on the project card.",
     repo: "https://github.com/Amir-Nafissi",
+    live: "#",
     longDescription:
-      "Placeholder description. Explain the scroll-driven technique, the performance work behind smooth scrubbing, and what you learned. Add stills from the sequence above.",
-    images: ["", "", ""],
-    links: [{ label: "Write-up", url: "#" }],
+      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+    images: [
+      "/gallery/projects/EchoSense/echosense_logo.png",
+      "/gallery/projects/EchoSense/echosense_full.jpg",
+      "/gallery/projects/EchoSense/echosense_inside.jpg",
+    ],
+    links: [{ label: "Repository", url: "#" }],
+  },
+  {
+    title: "Multiplayer Checkers",
+    description:
+      "TODO: short one-line description shown on the project card.",
+    repo: "https://github.com/Amir-Nafissi",
+    live: "#",
+    longDescription:
+      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+    images: [
+      "/gallery/projects/multiplayer_checkers/multiplayer_checkers_screenshot.png",
+    ],
+    links: [{ label: "Repository", url: "#" }],
+  },
+  {
+    title: "ScholarCompare",
+    description:
+      "TODO: short one-line description shown on the project card.",
+    repo: "https://github.com/Amir-Nafissi",
+    live: "#",
+    longDescription:
+      "TODO: full description shown in the overlay — what it does, the problem it solves, the stack, and what you're proud of.",
+    images: ["/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg"],
+    links: [{ label: "Repository", url: "#" }],
   },
 ];
