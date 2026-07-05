@@ -66,7 +66,7 @@ function ImageTile({
         <img
           src={src}
           alt={alt}
-          className="h-auto w-full rounded-xl border border-white/10"
+          className="h-auto w-full rounded-xl border-2 border-white/10 transition-all duration-200 hover:border-amber hover:shadow-[0_0_22px_-4px_rgba(245,194,107,0.6)]"
         />
       </button>
     );
