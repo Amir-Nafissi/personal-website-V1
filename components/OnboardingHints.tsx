@@ -8,6 +8,13 @@ import { ArrowDown } from "lucide-react";
 const SHOW_MS = 15000;
 // Treat anything within this many px of the top as "at the very top".
 const TOP_THRESHOLD = 4;
+// After showing, ignore scroll-driven hiding for a moment. iOS Safari fires
+// stray scroll events as the address bar settles right after load, which would
+// otherwise dismiss the hints before the user ever sees them.
+const HIDE_GRACE_MS = 1500;
+// Only a deliberate downward scroll (this fraction of the viewport) dismisses
+// the hints — not the few-px jitter iOS reports at the top.
+const HIDE_FRACTION = 0.2;
 
 /**
  * Onboarding hints that point at the two corner controls: the music button
@@ -22,10 +29,15 @@ export default function OnboardingHints() {
 
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
+    // Timestamp until which scroll events may not hide the hints.
+    let hideBlockedUntil = 0;
     const atTop = () => window.scrollY <= TOP_THRESHOLD;
+    const scrolledIntoContent = () =>
+      window.scrollY > window.innerHeight * HIDE_FRACTION;
 
     const show = () => {
       setVisible(true);
+      hideBlockedUntil = Date.now() + HIDE_GRACE_MS;
       clearTimeout(timer);
       timer = setTimeout(() => setVisible(false), SHOW_MS);
     };
@@ -45,7 +57,9 @@ export default function OnboardingHints() {
       const now = atTop();
       if (now && !wasTop) {
         show(); // returned to the very top — bring the hints back
-      } else if (!now) {
+      } else if (scrolledIntoContent() && Date.now() >= hideBlockedUntil) {
+        // Only a deliberate scroll into the content dismisses the hints; small
+        // iOS address-bar jitter near the top is ignored.
         setVisible(false);
         clearTimeout(timer);
       }
