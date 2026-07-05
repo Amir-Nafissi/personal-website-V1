@@ -251,7 +251,7 @@ export default function DetailModal({
             role="dialog"
             aria-modal="true"
             aria-label={title}
-            className={`text-shadow-soft relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl border bg-white/[0.07] p-6 backdrop-blur-md sm:p-10 ${glow}`}
+            className={`text-shadow-soft relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl border bg-void/15 p-6 backdrop-blur-md backdrop-brightness-[0.4] sm:p-10 ${glow}`}
             initial={
               reduceMotion
                 ? { opacity: 0 }
