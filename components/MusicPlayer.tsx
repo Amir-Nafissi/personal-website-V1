@@ -23,6 +23,12 @@ export default function MusicPlayer() {
   const audioRef = useRef<HTMLAudioElement>(null);
   const fadeRef = useRef<number | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
+  // Web Audio graph. iOS Safari ignores HTMLMediaElement.volume, so we route
+  // the element through a GainNode and control level there instead — the only
+  // way to change playback volume in code on iOS.
+  const audioCtxRef = useRef<AudioContext | null>(null);
+  const gainRef = useRef<GainNode | null>(null);
+  const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const [playing, setPlaying] = useState(false);
   const [volume, setVolume] = useState(DEFAULT_VOLUME); // the user's chosen volume
   const [ducked, setDucked] = useState(false); // true while an overlay is open
@@ -40,8 +46,8 @@ export default function MusicPlayer() {
     }
   }, []);
 
-  // Smoothly fade the audio element to the active target volume whenever the
-  // user's volume or the ducked state changes; persist the user's choice.
+  // Smoothly fade to the active target volume whenever the user's volume or the
+  // ducked state changes; persist the user's choice.
   useEffect(() => {
     localStorage.setItem(STORAGE_KEY, String(volume));
 
@@ -50,6 +56,21 @@ export default function MusicPlayer() {
 
     const clamp = (v: number) => Math.min(1, Math.max(0, v));
     const target = clamp(ducked ? volume * DUCK_FACTOR : volume);
+
+    // Preferred path: ramp the Web Audio gain node. This is the only volume
+    // control that actually works on iOS (element.volume is read-only there).
+    const gain = gainRef.current;
+    const ctx = audioCtxRef.current;
+    if (gain && ctx) {
+      const now = ctx.currentTime;
+      gain.gain.cancelScheduledValues(now);
+      gain.gain.setValueAtTime(clamp(gain.gain.value), now);
+      gain.gain.linearRampToValueAtTime(target, now + FADE_MS / 1000);
+      return;
+    }
+
+    // Fallback (graph not built yet, or Web Audio unsupported): fade the
+    // element's own volume via rAF. Works on desktop browsers.
     const from = clamp(audio.volume);
     const start = performance.now();
 
@@ -70,6 +91,35 @@ export default function MusicPlayer() {
       if (fadeRef.current !== null) cancelAnimationFrame(fadeRef.current);
     };
   }, [volume, ducked]);
+
+  // Build the Web Audio graph (once) that lets us control volume on iOS. Must
+  // run inside a user gesture, so it's called from the play handler.
+  const ensureAudioGraph = () => {
+    if (audioCtxRef.current) return;
+    const audio = audioRef.current;
+    if (!audio) return;
+    const Ctx =
+      window.AudioContext ??
+      (window as unknown as { webkitAudioContext?: typeof AudioContext })
+        .webkitAudioContext;
+    if (!Ctx) return; // unsupported — keep using element.volume
+    try {
+      const ctx = new Ctx();
+      const source = ctx.createMediaElementSource(audio);
+      const gain = ctx.createGain();
+      const clamp = (v: number) => Math.min(1, Math.max(0, v));
+      gain.gain.value = clamp(ducked ? volume * DUCK_FACTOR : volume);
+      source.connect(gain).connect(ctx.destination);
+      // Output now flows through the graph; keep the element wide open and let
+      // the gain node set the level (element.volume is ignored on iOS anyway).
+      audio.volume = 1;
+      audioCtxRef.current = ctx;
+      sourceRef.current = source;
+      gainRef.current = gain;
+    } catch {
+      // Routing failed (e.g. already connected) — fall back to element.volume.
+    }
+  };
 
   // Duck the music while any detail overlay is open (events from DetailModal).
   // A counter guards against overlapping open/close pairs.
@@ -115,6 +165,10 @@ export default function MusicPlayer() {
       audio.pause();
       setPlaying(false);
     } else {
+      // Set up + resume the Web Audio graph inside this user gesture so volume
+      // control works on iOS.
+      ensureAudioGraph();
+      void audioCtxRef.current?.resume();
       audio
         .play()
         .then(() => setPlaying(true))
@@ -175,7 +229,7 @@ export default function MusicPlayer() {
           onChange={(e) => setVolume(Number(e.target.value))}
           aria-label={`Music volume (${percent}%)`}
           title={`Volume: ${percent}%`}
-          className="music-volume h-1.5 w-32 shrink-0 cursor-pointer appearance-none rounded-full"
+          className="music-volume h-2 w-32 shrink-0 cursor-pointer touch-none appearance-none rounded-full"
           style={{
             background: `linear-gradient(to right, var(--color-amber) ${percent}%, rgba(255,255,255,0.2) ${percent}%)`,
           }}
