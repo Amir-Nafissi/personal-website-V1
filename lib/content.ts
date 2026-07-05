@@ -19,8 +19,8 @@ export const profile = {
   title: "Software Engineering Student at UWaterloo",
   // TODO: edit social URLs
   github: "https://github.com/Amir-Nafissi",
-  linkedin: "https://www.linkedin.com/in/amirhossein-nafissi", // TODO: confirm URL
-  email: "amirnafissi700@gmail.com",
+  linkedin: "https://www.linkedin.com/in/amir-nafissi/",
+  email: "nafissi.amir@gmail.com",
   // PDF served from public/.
   resume: "/amirhossein_nafissi_resume_2026.pdf",
 };

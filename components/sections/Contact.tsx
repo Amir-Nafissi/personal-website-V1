@@ -54,8 +54,12 @@ export default function Contact() {
     }
   }
 
+  // Fields start translucent so the video shows through, then darken on focus
+  // (and stay dark once they hold text, via :not(:placeholder-shown)) so what
+  // you type is easy to read. The placeholder labels are kept bright + shadowed
+  // for legibility against the video.
   const inputClass =
-    "w-full rounded-xl border border-white/15 bg-white/[0.08] px-4 py-3 text-sm font-normal text-haze placeholder:text-haze-dim/70 outline-none transition-colors duration-200 focus:border-mint/50 focus:bg-white/[0.11]";
+    "w-full rounded-xl border border-white/15 bg-white/[0.08] px-4 py-3 text-sm font-normal text-haze text-shadow-soft placeholder:text-haze/80 placeholder:[text-shadow:0_1px_3px_rgba(0,0,0,0.9)] outline-none transition-all duration-200 focus:border-mint/50 focus:bg-void/50 focus:backdrop-blur-md focus:backdrop-brightness-[0.4] [&:not(:placeholder-shown)]:border-mint/40 [&:not(:placeholder-shown)]:bg-void/50 [&:not(:placeholder-shown)]:backdrop-blur-md [&:not(:placeholder-shown)]:backdrop-brightness-[0.4]";
 
   return (
     <section
