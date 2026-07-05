@@ -15,7 +15,7 @@ export default function Hero() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
       >
-        <p className="mb-6 text-xs font-light tracking-spaced uppercase text-amber text-shadow-soft">
+        <p className="mb-6 text-sm font-semibold tracking-spaced uppercase text-amber text-shadow-soft">
           Portfolio
         </p>
         <h1 className="font-display text-3xl font-light tracking-tight text-haze sm:text-5xl text-shadow-glow">

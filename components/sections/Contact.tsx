@@ -73,7 +73,7 @@ export default function Contact() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md"
       >
-        <div className="mb-5 flex items-center justify-center gap-3 text-xs font-medium tracking-spaced uppercase text-mint">
+        <div className="mb-5 flex items-center justify-center gap-3 text-sm font-semibold tracking-spaced uppercase text-mint">
           <span className="h-px w-8 bg-mint/60" />
           <span className="text-shadow-soft">04 — Contact</span>
         </div>
