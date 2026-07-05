@@ -54,6 +54,7 @@ export default function Projects() {
         title={selected?.title ?? ""}
         description={selected?.longDescription ?? selected?.description ?? ""}
         images={selected?.images}
+        swapEndsOnMobile={selected?.swapEndsOnMobile}
         links={selected ? projectLinks(selected) : undefined}
       />
     </Section>

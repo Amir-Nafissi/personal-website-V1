@@ -120,6 +120,9 @@ export type Project = {
   longDescription?: string;
   images?: GalleryImage[];
   links?: DetailLink[];
+  // When true, the first and last gallery images swap places on mobile only
+  // (where the row stacks into a column); the desktop row is left unchanged.
+  swapEndsOnMobile?: boolean;
 };
 
 // TODO: edit project descriptions and links — titles and images are wired up.
@@ -148,6 +151,7 @@ export const projects: Project[] = [
       {src: "/gallery/projects/CueMate/cuemate_screenshot.jpg", caption: "A screenshot of the Android application running."},
       {src: "/gallery/projects/CueMate/echosense_screenshot.jpg", caption: "A picture of CueMate's ancestor, EvoSense, showing the underlying MediaPipe model."}
     ],
+    swapEndsOnMobile: true,
     links: [{ label: "Devpost", url: "https://devpost.com/software/cuemate" }],
   },
   {

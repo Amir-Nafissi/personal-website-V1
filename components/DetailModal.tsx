@@ -16,6 +16,8 @@ type DetailModalProps = {
   description: string;
   images?: GalleryImage[];
   links?: DetailLink[];
+  /** Swap the first and last gallery images on mobile only (see content.ts). */
+  swapEndsOnMobile?: boolean;
 };
 
 /** A gallery image after normalizing the `string | { src, caption }` union. */
@@ -186,6 +188,7 @@ export default function DetailModal({
   description,
   images,
   links,
+  swapEndsOnMobile = false,
 }: DetailModalProps) {
   const [mounted, setMounted] = useState(false);
   // Index of the photo shown fullscreen in the lightbox, or null when closed.
@@ -341,15 +344,31 @@ export default function DetailModal({
                   )}
                 </AnimatePresence>
                 <div className={`${showHint ? "mt-4" : "mt-6"} flex flex-wrap items-center justify-center gap-3`}>
-                  {gallery.map((img, i) => (
-                    <div key={i} className="w-full sm:w-[calc(33.333%-0.5rem)]">
-                      <ImageTile
-                        src={img.src}
-                        alt={`${title} image ${i + 1}`}
-                        onOpen={() => openLightbox(i)}
-                      />
-                    </div>
-                  ))}
+                  {gallery.map((img, i) => {
+                    // On mobile the row stacks into a column; optionally swap the
+                    // first and last tiles there while leaving the desktop row
+                    // (sm+) in source order.
+                    const swap =
+                      swapEndsOnMobile && gallery.length > 1
+                        ? i === 0
+                          ? "order-last sm:order-none"
+                          : i === gallery.length - 1
+                            ? "order-first sm:order-none"
+                            : ""
+                        : "";
+                    return (
+                      <div
+                        key={i}
+                        className={`w-full sm:w-[calc(33.333%-0.5rem)] ${swap}`}
+                      >
+                        <ImageTile
+                          src={img.src}
+                          alt={`${title} image ${i + 1}`}
+                          onOpen={() => openLightbox(i)}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
               </>
             )}
