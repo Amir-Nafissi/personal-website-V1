@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { ArrowUpRight, ChevronLeft, ChevronRight, ImageIcon, X } from "lucide-react";
+import { ArrowUpRight, ChevronLeft, ChevronRight, ImageIcon, X, ZoomIn } from "lucide-react";
 import type { DetailLink, GalleryImage } from "@/lib/content";
 import { GithubIcon } from "@/components/BrandIcons";
 
@@ -22,6 +22,10 @@ type DetailModalProps = {
 type NormalImage = { src: string; caption?: string };
 
 const EASE = [0.22, 1, 0.36, 1] as const;
+
+// Persisted flag so the "click a photo to enlarge" hint shows only the first
+// time a user opens an overlay that has images, then never again.
+const ZOOM_HINT_KEY = "gallery-zoom-hint-seen";
 
 /** Normalize the `string | { src, caption }` union into a uniform shape. */
 function normalizeImages(images: GalleryImage[]): NormalImage[] {
@@ -179,6 +183,8 @@ export default function DetailModal({
   const [mounted, setMounted] = useState(false);
   // Index of the photo shown fullscreen in the lightbox, or null when closed.
   const [lightbox, setLightbox] = useState<number | null>(null);
+  // First-time-only hint telling the user the gallery photos are clickable.
+  const [showHint, setShowHint] = useState(false);
   const reduceMotion = useReducedMotion();
 
   const gallery = centerLogo(normalizeImages(images ?? []));
@@ -189,7 +195,15 @@ export default function DetailModal({
   // not reappear the next time the modal opens.
   const close = () => {
     setLightbox(null);
+    setShowHint(false);
     onClose();
+  };
+
+  // Open a photo fullscreen; dismiss the hint too since the user just proved
+  // they know the photos are clickable.
+  const openLightbox = (index: number) => {
+    setShowHint(false);
+    setLightbox(index);
   };
 
   // Lock background scroll while open and tell the music player to duck.
@@ -203,6 +217,18 @@ export default function DetailModal({
       window.dispatchEvent(new Event("overlay-close"));
     };
   }, [open]);
+
+  // Show the "click a photo to enlarge" hint the first time an overlay with
+  // images is opened, then persist that it's been seen so it never repeats.
+  // It also auto-fades after a few seconds.
+  useEffect(() => {
+    if (!open || gallery.length === 0) return;
+    if (localStorage.getItem(ZOOM_HINT_KEY)) return;
+    localStorage.setItem(ZOOM_HINT_KEY, "1");
+    setShowHint(true);
+    const timer = setTimeout(() => setShowHint(false), 6000);
+    return () => clearTimeout(timer);
+  }, [open, gallery.length]);
 
   // Keyboard: Escape closes the lightbox first (else the modal); arrows page
   // through photos while the lightbox is open.
@@ -290,17 +316,35 @@ export default function DetailModal({
             </header>
 
             {gallery.length > 0 && (
-              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
-                {gallery.map((img, i) => (
-                  <div key={i} className="w-full sm:w-[calc(33.333%-0.5rem)]">
-                    <ImageTile
-                      src={img.src}
-                      alt={`${title} image ${i + 1}`}
-                      onOpen={() => setLightbox(i)}
-                    />
-                  </div>
-                ))}
-              </div>
+              <>
+                <AnimatePresence>
+                  {showHint && (
+                    <motion.div
+                      className="mt-6 flex justify-center"
+                      initial={{ opacity: 0, y: reduceMotion ? 0 : -6 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: reduceMotion ? 0 : -6 }}
+                      transition={{ duration: 0.35, ease: EASE }}
+                    >
+                      <span className="inline-flex items-center gap-1.5 whitespace-nowrap rounded-full border border-white/15 bg-white/[0.07] px-3.5 py-1.5 text-xs font-medium text-haze backdrop-blur-md">
+                        <ZoomIn className="h-3.5 w-3.5" aria-hidden="true" />
+                        Click a photo to enlarge
+                      </span>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+                <div className={`${showHint ? "mt-4" : "mt-6"} flex flex-wrap items-center justify-center gap-3`}>
+                  {gallery.map((img, i) => (
+                    <div key={i} className="w-full sm:w-[calc(33.333%-0.5rem)]">
+                      <ImageTile
+                        src={img.src}
+                        alt={`${title} image ${i + 1}`}
+                        onOpen={() => openLightbox(i)}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </>
             )}
 
             {description && (
