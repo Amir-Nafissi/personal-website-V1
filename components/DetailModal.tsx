@@ -120,7 +120,7 @@ function Lightbox({
             <img
               src={current.src}
               alt=""
-              className="max-h-[60vh] max-w-full shrink-0 rounded-xl object-contain sm:max-h-[72vh]"
+              className="max-h-[68dvh] max-w-full shrink-0 rounded-xl object-contain sm:max-h-[72vh]"
             />
             {/* Caption — wraps freely and is always fully readable. */}
             <div className="w-full max-w-2xl px-2 pb-14 text-center sm:pb-2">
@@ -142,7 +142,7 @@ function Lightbox({
         type="button"
         onClick={onClose}
         aria-label="Close"
-        className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-void/40 text-haze/70 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-haze"
+        className="absolute right-3 top-3 z-20 inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-void/80 text-haze shadow-lg shadow-black/60 backdrop-blur-md transition-colors duration-200 hover:bg-white/15 sm:right-4 sm:top-4"
       >
         <X className="h-5 w-5" aria-hidden="true" />
       </button>
