@@ -190,7 +190,7 @@ export const projects: Project[] = [
     // live: "#",
     longDescription:
       "Scholarly-Compare is an AI-powered grading platform that helps educators evaluate student answers in seconds. Instead of keyword matching, it uses Google's Gemini API to semantically compare each response against a model answer, surfacing conceptual gaps and knowledge strengths with personalized feedback. Educators can batch-process a whole class via CSV upload and revisit or export past evaluations to track progress. I built the front end with React, TypeScript, and Tailwind CSS, backed by a Python/Flask REST API and MongoDB.",
-    images: [{src: "/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg", caption: "A screenshot of the webapp running and the underlying user interface"}],
+    images: [{src: "/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg", caption: "A screenshot of the web app running, showing its user interface."}],
     links: [{ label: "Devpost", url: "https://devpost.com/software/scholar-compare" }],
   },
 ];
