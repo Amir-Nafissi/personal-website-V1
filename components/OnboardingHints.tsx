@@ -17,7 +17,7 @@ const TOP_THRESHOLD = 4;
  * Non-interactive (pointer-events-none) so they never block the buttons.
  */
 export default function OnboardingHints() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
   const reduce = useReducedMotion();
 
   useEffect(() => {
@@ -30,9 +30,17 @@ export default function OnboardingHints() {
       timer = setTimeout(() => setVisible(false), SHOW_MS);
     };
 
-    let wasTop = atTop();
-    if (wasTop) show();
+    // First appearance is keyed off the loading gate lifting rather than the
+    // mount-time scroll position. On mobile the initial scrollY can read
+    // non-zero (address-bar collapse / scroll restoration) while the effect
+    // runs, which previously made `atTop()` false and suppressed the hints on
+    // first load — they only reappeared once the user scrolled back to the top.
+    // Showing on `loading-complete` (fired while scroll is still locked at the
+    // top) guarantees they appear on initial load on every device.
+    if (window.__loadingComplete) show();
+    window.addEventListener("loading-complete", show);
 
+    let wasTop = atTop();
     const onScroll = () => {
       const now = atTop();
       if (now && !wasTop) {
@@ -48,6 +56,7 @@ export default function OnboardingHints() {
     return () => {
       clearTimeout(timer);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("loading-complete", show);
     };
   }, []);
 

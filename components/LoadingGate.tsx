@@ -21,6 +21,14 @@ const MAX_WAIT_MS = 5000;
 // How long the fade-out lasts (kept in sync with the transition class below).
 const FADE_MS = 600;
 
+declare global {
+  interface Window {
+    // Set once the gate lifts so late-mounting listeners (e.g. the onboarding
+    // hints) can tell the reveal already happened and show immediately.
+    __loadingComplete?: boolean;
+  }
+}
+
 /** Every distinct overlay gallery image path across all sections. */
 function galleryUrls(): string[] {
   const urls = new Set<string>();
@@ -46,8 +54,13 @@ export default function LoadingGate() {
     const finish = () => {
       if (done) return;
       done = true;
+      window.__loadingComplete = true;
       document.body.style.overflow = prevOverflow;
       setHidden(true);
+      // Tell the onboarding hints the page is now revealed, so they start their
+      // display window when the user can actually see them (and at the top,
+      // since scroll was locked here) rather than during the load.
+      window.dispatchEvent(new Event("loading-complete"));
       fadeTimer = window.setTimeout(() => setRemoved(true), FADE_MS);
     };
 
