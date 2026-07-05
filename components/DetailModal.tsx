@@ -100,18 +100,49 @@ function Lightbox({
 
   return (
     <motion.div
-      className="fixed inset-0 z-[60] flex flex-col items-center justify-center bg-void/90 p-4 backdrop-blur-sm sm:p-8"
+      className="fixed inset-0 z-[60] bg-void/90 backdrop-blur-sm"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.2, ease: EASE }}
       onClick={onClose}
     >
+      {/* Scrollable layer: the photo + caption center when they fit and scroll
+          when they don't, so a tall image plus a long caption is never cropped
+          on small screens. */}
+      <div className="absolute inset-0 overflow-y-auto overscroll-contain">
+        <div className="flex min-h-full w-full items-center justify-center p-4 sm:p-8">
+          <div
+            className="flex w-full max-w-5xl flex-col items-center gap-4"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={current.src}
+              alt=""
+              className="max-h-[60vh] max-w-full shrink-0 rounded-xl object-contain sm:max-h-[72vh]"
+            />
+            {/* Caption — wraps freely and is always fully readable. */}
+            <div className="w-full max-w-2xl px-2 pb-14 text-center sm:pb-2">
+              {current.caption ? (
+                <p className="text-sm font-light leading-relaxed text-haze/90">
+                  {current.caption}
+                </p>
+              ) : (
+                <p className="text-xs font-light italic text-haze/40">
+                  Add a short description for this photo.
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
       <button
         type="button"
         onClick={onClose}
         aria-label="Close"
-        className="absolute right-4 top-4 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze"
+        className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-void/40 text-haze/70 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-haze"
       >
         <X className="h-5 w-5" aria-hidden="true" />
       </button>
@@ -125,7 +156,7 @@ function Lightbox({
               go(-1);
             }}
             aria-label="Previous photo"
-            className="absolute left-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze sm:left-6"
+            className="absolute left-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-void/40 text-haze/70 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-haze sm:left-6"
           >
             <ChevronLeft className="h-6 w-6" aria-hidden="true" />
           </button>
@@ -136,36 +167,12 @@ function Lightbox({
               go(1);
             }}
             aria-label="Next photo"
-            className="absolute right-3 top-1/2 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 text-haze/70 transition-colors duration-200 hover:bg-white/10 hover:text-haze sm:right-6"
+            className="absolute right-3 top-1/2 z-10 inline-flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-white/10 bg-void/40 text-haze/70 backdrop-blur-sm transition-colors duration-200 hover:bg-white/10 hover:text-haze sm:right-6"
           >
             <ChevronRight className="h-6 w-6" aria-hidden="true" />
           </button>
         </>
       )}
-
-      <div
-        className="flex max-h-full w-full max-w-5xl flex-col items-center gap-4"
-        onClick={(e) => e.stopPropagation()}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={current.src}
-          alt=""
-          className="max-h-[72vh] max-w-full rounded-xl object-contain"
-        />
-        {/* Reserved space for a short caption — filled in when provided. */}
-        <div className="flex min-h-[3rem] max-w-2xl items-center justify-center px-2 text-center">
-          {current.caption ? (
-            <p className="text-sm font-light leading-relaxed text-haze/90">
-              {current.caption}
-            </p>
-          ) : (
-            <p className="text-xs font-light italic text-haze/40">
-              Add a short description for this photo.
-            </p>
-          )}
-        </div>
-      </div>
     </motion.div>
   );
 }
