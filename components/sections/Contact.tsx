@@ -59,7 +59,7 @@ export default function Contact() {
   // you type is easy to read. The placeholder labels are kept bright + shadowed
   // for legibility against the video.
   const inputClass =
-    "w-full rounded-xl border border-white/20 bg-void/25 px-4 py-3 text-sm font-normal text-haze text-shadow-soft backdrop-brightness-[0.75] placeholder:text-haze/80 placeholder:[text-shadow:0_1px_3px_rgba(0,0,0,0.9)] outline-none transition-all duration-200 focus:border-mint/50 focus:bg-void/50 focus:backdrop-blur-md focus:backdrop-brightness-[0.4] [&:not(:placeholder-shown)]:border-mint/40 [&:not(:placeholder-shown)]:bg-void/50 [&:not(:placeholder-shown)]:backdrop-blur-md [&:not(:placeholder-shown)]:backdrop-brightness-[0.4]";
+    "w-full rounded-xl border border-white/40 bg-white/50 px-4 py-3 text-sm font-semibold text-emerald-950 placeholder:text-emerald-900 outline-none transition-all duration-200 focus:border-mint/50 focus:bg-white/60 [&:not(:placeholder-shown)]:border-mint/40 [&:not(:placeholder-shown)]:bg-white/60";
 
   return (
     <section
@@ -142,7 +142,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "submitting" || status === "success"}
-            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-mint/40 bg-void/25 px-4 py-3 text-sm font-normal text-mint backdrop-brightness-[0.75] transition-all duration-200 hover:bg-mint/20 hover:shadow-[0_0_24px_-6px_rgba(167,215,197,0.5)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-mint/50 bg-mint/20 px-4 py-3 text-sm font-semibold text-emerald-300 transition-all duration-200 hover:bg-mint/30 hover:shadow-[0_0_24px_-6px_rgba(167,215,197,0.5)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "submitting" && (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
@@ -224,7 +224,7 @@ function SocialLink({
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
         : {})}
-      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-void/25 backdrop-brightness-[0.75] text-haze transition-all duration-200 [&_svg]:drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] hover:border-mint/40 hover:text-mint hover:shadow-[0_0_22px_-6px_rgba(167,215,197,0.5)]"
+      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/40 bg-white/50 text-emerald-900 transition-all duration-200 hover:border-mint/50 hover:text-emerald-700 hover:shadow-[0_0_22px_-6px_rgba(167,215,197,0.5)]"
     >
       {icon}
     </a>

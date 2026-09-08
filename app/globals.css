@@ -58,19 +58,20 @@ body {
 }
 
 /* Neutralize the browser's autofill styling on the contact form: replace the
-   yellow background with our dark "filled" look, keep the text light, and drop
-   the inherited text-shadow. The 9999s transition prevents the yellow flash. */
+   yellow background with our light "filled" look, keep the text dark (to match
+   the light fields), and drop the inherited text-shadow. The 9999s transition
+   prevents the yellow flash. */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus {
-  -webkit-text-fill-color: var(--color-haze);
-  -webkit-box-shadow: 0 0 0 1000px rgba(6, 6, 8, 0.85) inset;
-  box-shadow: 0 0 0 1000px rgba(6, 6, 8, 0.85) inset;
+  -webkit-text-fill-color: #064e3b; /* emerald-900, matches name/email/message */
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.9) inset;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.9) inset;
   text-shadow: none;
-  caret-color: var(--color-haze);
+  caret-color: #064e3b;
   transition: background-color 9999s ease-in-out 0s;
 }
 
