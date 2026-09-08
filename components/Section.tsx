@@ -22,8 +22,8 @@ const accentClass = {
 };
 
 const ruleClass = {
-  amber: "bg-amber/60",
-  mint: "bg-mint/60",
+  amber: "bg-amber",
+  mint: "bg-mint",
 };
 
 export default function Section({
@@ -50,11 +50,11 @@ export default function Section({
       >
         {eyebrow && (
           <div
-            className={`mb-5 flex items-center gap-3 text-base font-semibold tracking-spaced uppercase ${
+            className={`mb-5 flex items-center gap-3 text-base font-bold tracking-spaced uppercase ${
               align === "center" ? "justify-center" : ""
             } ${accentClass[accent]}`}
           >
-            <span className={`h-px w-8 ${ruleClass[accent]}`} />
+            <span className={`h-0.5 w-8 shadow-[0_1px_4px_rgba(0,0,0,0.5)] ${ruleClass[accent]}`} />
             <span className="text-shadow-soft">{eyebrow}</span>
           </div>
         )}

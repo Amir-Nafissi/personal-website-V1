@@ -73,15 +73,15 @@ export default function Contact() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md"
       >
-        <div className="mb-5 flex items-center justify-center gap-3 text-base font-semibold tracking-spaced uppercase text-mint">
-          <span className="h-px w-8 bg-mint/60" />
+        <div className="mb-5 flex items-center justify-center gap-3 text-base font-bold tracking-spaced uppercase text-mint">
+          <span className="h-0.5 w-8 bg-mint shadow-[0_1px_4px_rgba(0,0,0,0.5)]" />
           <span className="text-shadow-soft">04 — Contact</span>
         </div>
 
         <h2 className="font-display text-2xl font-normal text-haze sm:text-3xl text-shadow-soft">
           Let&apos;s talk
         </h2>
-        <p className="mx-auto mt-3 max-w-sm text-sm font-normal text-haze text-shadow-soft">
+        <p className="mx-auto mt-3 max-w-sm text-base font-medium text-white text-shadow-soft">
           Have something in mind, or just want to say hello? Send a message.
         </p>
 
@@ -224,7 +224,7 @@ function SocialLink({
       {...(external
         ? { target: "_blank", rel: "noopener noreferrer" }
         : {})}
-      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/15 bg-white/[0.08] text-haze transition-all duration-200 [&_svg]:drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] hover:border-mint/40 hover:text-mint hover:shadow-[0_0_22px_-6px_rgba(167,215,197,0.5)]"
+      className="flex h-11 w-11 cursor-pointer items-center justify-center rounded-full border border-white/20 bg-void/25 backdrop-brightness-[0.75] text-haze transition-all duration-200 [&_svg]:drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)] hover:border-mint/40 hover:text-mint hover:shadow-[0_0_22px_-6px_rgba(167,215,197,0.5)]"
     >
       {icon}
     </a>
