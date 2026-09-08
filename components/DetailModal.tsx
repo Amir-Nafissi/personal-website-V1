@@ -374,7 +374,7 @@ export default function DetailModal({
             )}
 
             {description && (
-              <p className="mt-6 text-[0.95rem] font-normal leading-relaxed text-haze">
+              <p className="mt-6 whitespace-pre-line text-[0.95rem] font-normal leading-relaxed text-haze">
                 {description}
               </p>
             )}
