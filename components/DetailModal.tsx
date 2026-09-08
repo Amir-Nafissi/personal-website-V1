@@ -11,6 +11,8 @@ type DetailModalProps = {
   open: boolean;
   onClose: () => void;
   accent?: "amber" | "mint";
+  /** Panel variant: "dark" (default) or "nebula" (indigo/violet glass to match the projects cards). */
+  variant?: "dark" | "nebula";
   title: string;
   meta?: string;
   description: string;
@@ -183,6 +185,7 @@ export default function DetailModal({
   open,
   onClose,
   accent = "amber",
+  variant = "dark",
   title,
   meta,
   description,
@@ -267,6 +270,8 @@ export default function DetailModal({
     accent === "amber"
       ? "border-amber/40 shadow-[0_0_30px_-6px_rgba(245,194,107,0.35)]"
       : "border-mint/40 shadow-[0_0_30px_-6px_rgba(167,215,197,0.35)]";
+  const variantBg =
+    variant === "nebula" ? "bg-indigo-950/30" : "bg-void/15";
   const accentText = accent === "amber" ? "text-amber" : "text-mint";
   const linkHover =
     accent === "amber" ? "hover:text-amber" : "hover:text-mint";
@@ -287,7 +292,7 @@ export default function DetailModal({
             role="dialog"
             aria-modal="true"
             aria-label={title}
-            className={`text-shadow-soft relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl border bg-void/15 p-6 backdrop-blur-md backdrop-brightness-[0.4] sm:p-10 ${glow}`}
+            className={`text-shadow-soft relative w-full max-w-6xl max-h-[92vh] overflow-y-auto rounded-2xl border ${variantBg} p-6 backdrop-blur-md backdrop-brightness-[0.4] sm:p-10 ${glow}`}
             initial={
               reduceMotion
                 ? { opacity: 0 }

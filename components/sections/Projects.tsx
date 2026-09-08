@@ -26,7 +26,7 @@ export default function Projects() {
     >
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
         {projects.map((project) => (
-          <GlassCard key={project.title} className="flex flex-col text-left">
+          <GlassCard key={project.title} variant="nebula" className="flex flex-col text-left">
             <button
               type="button"
               onClick={() => setSelected(project)}
@@ -51,6 +51,7 @@ export default function Projects() {
         open={selected !== null}
         onClose={() => setSelected(null)}
         accent="amber"
+        variant="nebula"
         title={selected?.title ?? ""}
         description={selected?.longDescription ?? selected?.description ?? ""}
         images={selected?.images}
