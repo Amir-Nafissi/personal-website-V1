@@ -50,7 +50,7 @@ export default function Section({
       >
         {eyebrow && (
           <div
-            className={`mb-5 flex items-center gap-3 text-sm font-semibold tracking-spaced uppercase ${
+            className={`mb-5 flex items-center gap-3 text-base font-semibold tracking-spaced uppercase ${
               align === "center" ? "justify-center" : ""
             } ${accentClass[accent]}`}
           >

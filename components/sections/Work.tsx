@@ -39,7 +39,7 @@ export default function Work() {
               <p className="mt-3 text-sm font-normal leading-relaxed text-haze">
                 {item.description}
               </p>
-              <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-normal text-haze/75 transition-colors duration-200 group-hover:text-amber">
+              <span className="mt-5 inline-flex items-center gap-1.5 text-xs font-medium text-amber [text-shadow:0_1px_3px_rgba(0,0,0,0.4)]">
                 View details →
               </span>
             </button>

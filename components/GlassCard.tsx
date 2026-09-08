@@ -7,8 +7,8 @@ type GlassCardProps = {
 };
 
 /**
- * A card that stays almost invisible (letting the video show through) and
- * only resolves into a frosted-glass panel with an accent glow on hover.
+ * A frosted-glass panel that's always blurred and darkened so the content
+ * reads clearly over the video, with an accent glow and lift on hover.
  */
 export default function GlassCard({
   children,
@@ -22,7 +22,7 @@ export default function GlassCard({
 
   return (
     <div
-      className={`group text-shadow-soft relative rounded-2xl border border-white/15 bg-white/[0.08] p-6 transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-white/25 hover:bg-void/15 hover:backdrop-blur-md hover:backdrop-brightness-[0.4] ${hover} ${className}`}
+      className={`group text-shadow-soft relative rounded-2xl border border-white/20 bg-void/25 p-6 backdrop-brightness-[0.75] transition-all duration-300 ease-out hover:-translate-y-0.5 hover:border-white/30 ${hover} ${className}`}
     >
       {children}
     </div>

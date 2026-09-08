@@ -59,7 +59,7 @@ export default function Contact() {
   // you type is easy to read. The placeholder labels are kept bright + shadowed
   // for legibility against the video.
   const inputClass =
-    "w-full rounded-xl border border-white/15 bg-white/[0.08] px-4 py-3 text-sm font-normal text-haze text-shadow-soft placeholder:text-haze/80 placeholder:[text-shadow:0_1px_3px_rgba(0,0,0,0.9)] outline-none transition-all duration-200 focus:border-mint/50 focus:bg-void/50 focus:backdrop-blur-md focus:backdrop-brightness-[0.4] [&:not(:placeholder-shown)]:border-mint/40 [&:not(:placeholder-shown)]:bg-void/50 [&:not(:placeholder-shown)]:backdrop-blur-md [&:not(:placeholder-shown)]:backdrop-brightness-[0.4]";
+    "w-full rounded-xl border border-white/20 bg-void/25 px-4 py-3 text-sm font-normal text-haze text-shadow-soft backdrop-brightness-[0.75] placeholder:text-haze/80 placeholder:[text-shadow:0_1px_3px_rgba(0,0,0,0.9)] outline-none transition-all duration-200 focus:border-mint/50 focus:bg-void/50 focus:backdrop-blur-md focus:backdrop-brightness-[0.4] [&:not(:placeholder-shown)]:border-mint/40 [&:not(:placeholder-shown)]:bg-void/50 [&:not(:placeholder-shown)]:backdrop-blur-md [&:not(:placeholder-shown)]:backdrop-brightness-[0.4]";
 
   return (
     <section
@@ -73,7 +73,7 @@ export default function Contact() {
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
         className="w-full max-w-md"
       >
-        <div className="mb-5 flex items-center justify-center gap-3 text-sm font-semibold tracking-spaced uppercase text-mint">
+        <div className="mb-5 flex items-center justify-center gap-3 text-base font-semibold tracking-spaced uppercase text-mint">
           <span className="h-px w-8 bg-mint/60" />
           <span className="text-shadow-soft">04 — Contact</span>
         </div>
@@ -142,7 +142,7 @@ export default function Contact() {
           <button
             type="submit"
             disabled={status === "submitting" || status === "success"}
-            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-mint/40 bg-mint/10 px-4 py-3 text-sm font-normal text-mint transition-all duration-200 hover:bg-mint/20 hover:shadow-[0_0_24px_-6px_rgba(167,215,197,0.5)] disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex w-full cursor-pointer items-center justify-center gap-2 rounded-xl border border-mint/40 bg-void/25 px-4 py-3 text-sm font-normal text-mint backdrop-brightness-[0.75] transition-all duration-200 hover:bg-mint/20 hover:shadow-[0_0_24px_-6px_rgba(167,215,197,0.5)] disabled:cursor-not-allowed disabled:opacity-60"
           >
             {status === "submitting" && (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
