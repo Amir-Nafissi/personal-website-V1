@@ -186,14 +186,29 @@ export const projects: Project[] = [
     // links: [{ label: "Repository", url: "#" }],
   },
   {
-    title: "ScholarCompare",
+    title: "VisualizeQuantum",
     description:
-      "An AI grading tool that semantically compares student answers to a model answer",
-    repo: "https://github.com/Amir-Nafissi/Scholarly-Compare",
-    // live: "#",
+      "An interactive playground for visualizing quantum algorithms, starting with QAOA graph coloring",
+    repo: "https://github.com/Amir-Nafissi/visualize-quantum",
+    live: "https://visualize-quantum.vercel.app",
     longDescription:
-      "Scholarly-Compare is an AI-powered grading platform that helps educators evaluate student answers in seconds. Instead of keyword matching, it uses Google's Gemini API to semantically compare each response against a model answer, surfacing conceptual gaps and knowledge strengths with personalized feedback. Educators can batch-process a whole class via CSV upload and revisit or export past evaluations to track progress. I built the front end with React, TypeScript, and Tailwind CSS, backed by a Python/Flask REST API and MongoDB.",
-    images: [{ src: "/gallery/projects/ScholarCompare/scholar_compare_screenshot.jpg", caption: "A screenshot of the web app running, showing its user interface." }],
-    links: [{ label: "Devpost", url: "https://devpost.com/software/scholar-compare" }],
+      "VisualizeQuantum is an interactive, modular playground for visualizing quantum algorithms. Milestone 1 ships graph coloring with QAOA (Quantum Approximate Optimization Algorithm): you build a graph, solve a real QUBO with an exact statevector QAOA locally, or sample the optimized circuit on IBM Quantum hardware, and watch the optimization converge. The app is built around a small plugin contract so future algorithms drop in as self-contained modules. I built the front end with Next.js, TypeScript, and Tailwind, with a Python serverless backend handling the NumPy/SciPy QAOA math and Qiskit-driven IBM runs.",
+    images: [
+      { src: "/gallery/projects/visualize_quantum/graph_builder.png", caption: "The interactive graph builder, where you lay out nodes and edges before handing the problem to QAOA." },
+      { src: "/gallery/projects/visualize_quantum/colored_graph.png", caption: "QAOA's result: a properly colored graph, with the optimization converged." }
+    ],
+  },
+  {
+    title: "WatQ Website",
+    description:
+      "Marketing site for WatQ, the UWaterloo quantum design team",
+    repo: "https://github.com/Amir-Nafissi/WatQ-Website",
+    live: "https://watq-website.vercel.app",
+    longDescription:
+      "The WatQ Website is the marketing site for WatQ, the undergraduate quantum design team at the University of Waterloo, covering both the photonics hardware and Qiskit software sub-teams. It is fully static with no backend: an interactive WebGL hero, a self-drawing Mach-Zehnder interferometer SVG, a draggable 3D Bloch sphere for exploring single-qubit gates, and a Qiskit algorithm showcase. I built it with Next.js, TypeScript, Tailwind, Framer Motion, and React Three Fiber, and every route prerenders statically.",
+    images: [
+      { src: "/gallery/projects/WatQ_Website/hero_page.png", caption: "The landing page hero, with its interactive WebGL particle knot." },
+      { src: "/gallery/projects/WatQ_Website/qubit_viz.png", caption: "The interactive 3D Bloch sphere, where you drag the state vector and apply single-qubit gates." }
+    ],
   },
 ];
